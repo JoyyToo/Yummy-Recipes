@@ -1,4 +1,4 @@
-# ShoppingList
+# Yummy Recipes
 
 It contains:
  - Designs
@@ -14,7 +14,7 @@ Contains HTML and CSS files for UI.
 
 Contains designs for the UI folder.
 
-## Shopping List App Description
+## YUmmy REcipes App Description
 
 Contains a Yummy Recipes flask app that provides a platform for users to keep track of their awesome recipes and share with others if they so wish.
 

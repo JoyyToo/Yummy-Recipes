@@ -14,7 +14,7 @@ Contains HTML and CSS files for UI.
 
 Contains designs for the UI folder.
 
-## YUmmy REcipes App Description
+## Yummy Recipes App Description
 
 Contains a Yummy Recipes flask app that provides a platform for users to keep track of their awesome recipes and share with others if they so wish.
 
@@ -24,3 +24,12 @@ Contains a Yummy Recipes flask app that provides a platform for users to keep tr
 - Users can log in
 - Users create, view, update and delete recipe categories 
 - Users can create, view, update or delete recipes in existing categories
+
+## Sign Up
+![Alt text](https://github.com/JoyyToo/Yummy-Recipes/Designs/UI/Screenshots/sign up.png?raw=true "Sign Up")
+
+## Log in
+![Alt text](https://github.com/JoyyToo/Yummy-Recipes/Designs/UI/Screenshots/sign in.png?raw=true "Sign In")
+
+## Recipes
+![Alt text](https://github.com/JoyyToo/Yummy-Recipes/Designs/UI/Screenshots/rec.png?raw=true "Recipes")

@@ -26,10 +26,10 @@ Contains a Yummy Recipes flask app that provides a platform for users to keep tr
 - Users can create, view, update or delete recipes in existing categories
 
 ## Sign Up
-![Alt text](https://github.com/JoyyToo/Yummy-Recipes/tree/develop/Designs/UI/Screenshots/signup.png?raw=true "Sign Up")
+![Alt text](https://joyytoo.github.io/Yummy-Recipes/Designs/UI/index.html/Designs/UI/Screenshots/signup.png?raw=true "Sign Up")
 
 ## Log in
-![Alt text](https://github.com/JoyyToo/Yummy-Recipes/tree/develop/Designs/UI/Screenshots/signin.png?raw=true "Sign In")
+![Alt text](https://joyytoo.github.io/Yummy-Recipes/Designs/UI/index.html/Designs/UI/Screenshots/signin.png?raw=true "Sign In")
 
 ## Recipes
-![Alt text](https://github.com/JoyyToo/Yummy-Recipes/tree/develop/Designs/UI/Screenshots/rec.png?raw=true "Recipes")
+![Alt text](https://joyytoo.github.io/Yummy-Recipes/Designs/UI/index.html/Designs/UI/Screenshots/rec.png?raw=true "Recipes")

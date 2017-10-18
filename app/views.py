@@ -1,4 +1,5 @@
 from app import app, render_template, redirect, request, url_for, jsonify, session
+from flask import flash
 from app.models.Users import Users
 
 user = Users()
@@ -24,7 +25,7 @@ def login():
                 "password": response['user']['password'],
                 "id": response['user']['id']
             }
-            return redirect(url_for('index'))
+            return redirect(url_for('home'))
 
     return render_template('login.html', data=response)
 
@@ -38,9 +39,9 @@ def register():
         password_again = request.form['password-again']
 
         response = user.register_user(username, email, password, password_again)
-        if response['status'] == 'error':
-            pass
+
         print(response)
+        return redirect(url_for('login'))
 
     return render_template("register.html")
 

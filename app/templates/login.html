@@ -7,17 +7,17 @@
   <title>Login</title>
 
   <!-- Bootstrap core CSS -->
-  <link href="static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  
+  <link href="{{ url_for('static', filename = 'vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
+
       <!-- Custom fonts -->
-      <link href="static/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-      <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">  
+      <link href="{{ url_for('static', filename = 'vendor/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet" type="text/css">
+      <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
 
   <!-- CORE CSS--> 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/css/materialize.min.css">
 
   <!-- Custom styles -->
-  <link href="static/css/style.css" rel="stylesheet">
+  <link href="{{ url_for('static', filename = 'css/style.css')}}" rel="stylesheet">
    
 </head>
 
@@ -65,7 +65,7 @@
         </div>
         <div class="row">
           <div class="input-field col s12">
-            <a href="{{url_for('home')}}" class="btn waves-effect waves-light col s12">Login</a>
+              <button type="submit" class="btn waves-effect waves-light col s12" value="Login">Login</button>
           </div>
         </div>
         <div class="row">
@@ -84,12 +84,12 @@
 
 <!-- SCRIPTS -->
     <!-- JQuery -->
-    <script type="text/javascript" src="static/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename = 'js/jquery-3.2.1.min.js')}}"></script>
     <!-- Bootstrap tooltips -->
-    <script type="text/javascript" src="static/js/popper.min.js"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename = 'js/popper.min.js')}}"></script>
     <!-- Bootstrap core JavaScript -->
-    <script type="text/javascript" src="static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename = 'js/bootstrap.min.js')}}"></script>
     <!-- MDB core JavaScript -->
-    <script type="text/javascript" src="static/js/mdb.min.js"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename = 'js/mdb.min.js')}}"></script>
 
 </html>

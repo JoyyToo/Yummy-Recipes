@@ -44,7 +44,7 @@ class TestForUserClass(unittest.TestCase):
         result = self.usr.login_user('', '')
         self.assertEqual({"status": "error", "message": "Please fill in all fields"}, result, )
 
-    def test_for_empty_loginmail_field(self):
+    def test_for_empty_login_mail_field(self):
         """Test for empty email field"""
         result = self.usr.login_user('', 'pass')
         self.assertEqual({"status": "error", "message": "Please fill in all fields"}, result)

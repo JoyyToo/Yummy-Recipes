@@ -1,11 +1,11 @@
-"""Test for user class"""
+"""Test for category class"""
 
 import unittest
 from app.models.Category import Category
 
 
 class TestForClassCategory(unittest.TestCase):
-    """Test for user class"""
+    """Test for category class"""
     def setUp(self):
         """Initializes test for user Class"""
         self.cat = Category()

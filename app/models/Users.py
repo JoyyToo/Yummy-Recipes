@@ -31,7 +31,7 @@ class Users(object):
                         "status": "success",
                         "user": self.users[self.id]
                     }
-            else:
+
                 return {
                     'message': 'Passwords do not match',
                     'status': 'error'
@@ -51,6 +51,7 @@ class Users(object):
                     "status": "success",
                     "user": self.users[self.check_if_user_exists()]
                 }
+
             return {
                 "message": "Invalid login credentials",
                 "status": "error"
@@ -122,3 +123,6 @@ class Users(object):
                 return user['id']
         else:
             return False
+
+
+

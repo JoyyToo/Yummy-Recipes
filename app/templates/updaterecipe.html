@@ -8,17 +8,17 @@
 
   <!-- Bootstrap core CSS -->
   <link href="{{ url_for('static', filename = 'vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
-  
+
       <!-- Custom fonts -->
       <link href="{{ url_for('static', filename = 'vendor/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
-      <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">  
+      <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
 
-  <!-- CORE CSS--> 
+  <!-- CORE CSS-->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/css/materialize.min.css">
 
   <!-- Custom styles -->
   <link href="{{ url_for('static', filename = 'css/style.css') }}" rel="stylesheet">
-   
+
 </head>
 
 <body>
@@ -36,15 +36,12 @@
             </li>
           </ul>
         </div>
-       
+
       </div>
     </nav>
-   {% if data %}
+    {% if data %}
+            <h4 style="color: white;">{{ data['message'] }}</h4>
 
-        {{ data }}
-
-   {% endif %}
-     
   <div id="login-page" class="row">
     <div class="col-md-24 z-depth-6 card-panel">
       <form class="login-form" method="post">
@@ -54,40 +51,40 @@
           </div>
         </div>
         <div class="row margin">
-          <div class="input-field col s12">   
-            <input name="name" type="text">
+          <div class="input-field col s12">
+            <input name="name" value="{{ data['recipe']['name'] }}" type="text">
             <label for="name" class="center-align">Name</label>
           </div>
         </div>
         <div class="row margin">
           <div class="input-field col s12">
            <input type="file" name="fileupload" value="fileupload" id="fileupload" input type="image" src="/wp-content/uploads/sendform.png" alt="Submit" width="50%">
-          
+
         </div>
       </div> <br><br>
         <div class="row margin">
             <div class="input-field col s12">
-              <input name="time" type="text">
+              <input name="time" value="{{ data['recipe']['time'] }}" type="text">
               <label for="time" class="center-align">Time taken</label>
             </div>
           </div>
-      
+
         <div class="row">
             <div class="input-field col s12">
-              <textarea id="textarea" name="ingredients" class="materialize-textarea"></textarea>
-              <label for="textarea1">Ingredients</label>
+              <textarea id="textarea" name="ingredients" class="materialize-textarea">"{{ data['recipe']['ingredients'] }}"</textarea>
+              <label for="textarea">Ingredients</label>
             </div>
           </div>
           <div class="row">
             <div class="input-field col s12">
-              <textarea id="textarea1" name="direction" class="materialize-textarea"></textarea>
+              <textarea id="textarea1" name="direction" class="materialize-textarea">"{{ data['recipe']['direction'] }}"</textarea>
               <label for="textarea1">Directions</label>
             </div>
           </div>
-    
+
         <div class="row">
           <div class="input-field col s12">
-            <button type="submit" value="ADD" class="btn waves-effect waves-light col s12">ADD</button>
+            <button type="submit" value="UPDATE" class="btn waves-effect waves-light col s12">UPDATE</button>
           </div>
           <div class="input-field col s6 m6 l6">
             <p class="margin medium-small">A recipe has no soul. You are the cook, give life to the recipe</p>
@@ -97,7 +94,8 @@
       </form>
     </div>
   </div>
-  </div>
+    {% endif %}
+
 <!-- SCRIPTS -->
     <!-- JQuery -->
     <script type="text/javascript" src="{{ url_for('static', filename = 'js/jquery-3.2.1.min.js') }}"></script>

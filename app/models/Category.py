@@ -1,14 +1,19 @@
+"""Category class"""
+
+
 class Category(object):
     cat = {}
     last_id = None
 
     def __init__(self):
+        """initialization"""
         self.id = None
         self.name = None
         self.description = None
         self.user_id = None
 
     def create_category(self, name, description, user_id):
+        """create category"""
         if name and description and user_id:
             self.name = name
             self.description = description
@@ -21,6 +26,10 @@ class Category(object):
                     "status": "success",
                     "category": self.cat[self.id]
                 }
+            return {
+                "message": "Category exists",
+                "status": "error"
+            }
 
         return {
             "message": "Fill all the fields",
@@ -28,8 +37,9 @@ class Category(object):
         }
 
     def update_category(self, cat_id, name, description, user_id):
-        cat = int(cat_id)
-        if cat in self.cat.keys():
+        """update category"""
+        cat_id = int(cat_id)
+        if cat_id in self.cat.keys():
             if name and description and user_id:
                 self.cat[cat_id] = {
                     "id": cat_id,
@@ -52,6 +62,7 @@ class Category(object):
         }
 
     def delete_category(self, cat_id):
+        """delete category"""
         if int(cat_id) in self.cat.keys():
             del self.cat[int(cat_id)]
             return {
@@ -64,10 +75,12 @@ class Category(object):
         }
 
     def all_categories(self):
+        """display all categories"""
         if self.cat:
             return self.cat
 
     def single_category(self, cat_id):
+        """display single category"""
         if int(cat_id) in self.cat.keys():
             return {
                 "status": "success",
@@ -79,7 +92,7 @@ class Category(object):
         }
 
     def assign_id(self):
-
+        """assign id"""
         if len(self.cat) == 0:
             _id = 1
             self.last_id = _id
@@ -89,6 +102,7 @@ class Category(object):
         return _id
 
     def save(self):
+        """save data"""
         self.cat[self.id] = {
             "id": self.id,
             "name": self.name,
@@ -96,9 +110,3 @@ class Category(object):
             "user_id": self.user_id
         }
         return True
-
-
-new_cat = Category()
-print(new_cat.create_category('Appetizers', 'a desc', 2))
-print(new_cat.update_category(1, '', 'a desc', 2))
-print(new_cat.update_category(1, 'app', 'as', 5))

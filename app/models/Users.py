@@ -1,3 +1,6 @@
+"""Class Users"""
+
+
 class Users(object):
 
     users = {}
@@ -11,6 +14,7 @@ class Users(object):
         self.id = None
 
     def register_user(self, username, email, password, password_again):
+        """Register user"""
         if username and email and password and password_again:
             if password == password_again:
                 self.username = username
@@ -32,10 +36,10 @@ class Users(object):
                         "user": self.users[self.id]
                     }
 
-                return {
-                    'message': 'Passwords do not match',
-                    'status': 'error'
-                }
+            return {
+                'message': 'Passwords do not match',
+                'status': 'error'
+            }
 
         else:
             return {
@@ -44,6 +48,7 @@ class Users(object):
             }
 
     def login_user(self, email, password):
+        """Login User"""
         if email and password:
             if self.check_if_user_exists():
                 return {
@@ -63,6 +68,7 @@ class Users(object):
         }
 
     def update_user(self, user_id, username, email, password, password_again):
+        """Update user"""
         if self.update(user_id, username, email, password, password_again):
             return {
                 "message": "User updated successfully",
@@ -75,6 +81,7 @@ class Users(object):
         }
 
     def delete_account(self, user_id):
+        """Delete user account"""
         if user_id in self.users.keys():
             del self.users[user_id]
             return {
@@ -87,6 +94,7 @@ class Users(object):
         }
 
     def assign_id(self):
+        """Assign id"""
         if len(self.users) == 0:
             _id = 1
             self.last_id = _id
@@ -96,6 +104,7 @@ class Users(object):
         return _id
 
     def update(self, user_id, username, email, password, password_again):
+        """Update data"""
         if user_id and username and email and password and password_again:
             if user_id in self.users.keys():
                 self.users[user_id] = {
@@ -108,6 +117,7 @@ class Users(object):
                 return True
 
     def save(self):
+        """save date"""
         self.users[self.id] = {
             "id": self.id,
             "username": self.username,
@@ -118,11 +128,9 @@ class Users(object):
         return True
 
     def check_if_user_exists(self):
+        """Checking if user exists"""
         for user in self.users.values():
             if user['email'] == self.email:
                 return user['id']
         else:
             return False
-
-
-

@@ -1,3 +1,6 @@
+"""Recipe class"""
+
+
 class Recipe(object):
     rec = {}
     last_id = None
@@ -12,6 +15,7 @@ class Recipe(object):
         self.user_id = None
 
     def create_recipe(self, name, time, ingredients, direction, category_id, user_id):
+        """create recipe"""
         if name and time and ingredients and direction and category_id and user_id:
             self.name = name
             self.time = time
@@ -37,6 +41,7 @@ class Recipe(object):
         }
 
     def update_recipe(self, recipe_id, name, time, ingredients, direction, category_id, user_id):
+        """update recipe"""
         recipe_id = int(recipe_id)
         if recipe_id and name and time and ingredients and direction and category_id and user_id:
 
@@ -64,7 +69,8 @@ class Recipe(object):
             "status": "error"
         }
 
-    def delete_item(self, recipe_id):
+    def delete_recipe(self, recipe_id):
+        """delete recipe"""
         recipe_id = int(recipe_id)
         if recipe_id in self.rec.keys():
             del self.rec[recipe_id]
@@ -78,6 +84,7 @@ class Recipe(object):
         }
 
     def single_recipe(self, recipe_id):
+        """view single recipe"""
         recipe_id = int(recipe_id)
         if recipe_id in self.rec.keys():
             return {
@@ -90,6 +97,7 @@ class Recipe(object):
         }
 
     def all_recipe(self):
+        """view all recipe"""
         if len(self.rec):
             return {
                 "status": "success",
@@ -101,9 +109,11 @@ class Recipe(object):
         }
 
     def view_recipes(self):
+        """view all recipes"""
         return self.rec
 
     def save(self):
+        """save data"""
         self.rec[self.id] = {
             "id": self.id,
             "name": self.name,
@@ -116,6 +126,7 @@ class Recipe(object):
         return True
 
     def assign_id(self):
+        """assign id"""
 
         if len(self.rec) == 0:
             _id = 1
@@ -124,5 +135,3 @@ class Recipe(object):
             self.last_id = int(self.last_id) + 1
             _id = self.last_id
         return _id
-
-

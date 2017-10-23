@@ -39,37 +39,40 @@
 
       </div>
     </nav>
-      <a href="{{url_for('addrecipe', _id=['id'])}}" class="btn-floating btn-large waves-effect waves-light red">
+      <a href="{{url_for('addrecipe', _id=data['cat_id'])}}" class="btn-floating btn-large waves-effect waves-light red">
                                     <i class="material-icons">+</i></a>&nbsp &nbsp
     {%if data%}
 
+
 <div class="col-md-12 z-depth-6 card-panel" style="float: left;">
-         {% for rec in data %}
-            {%if session['is_logged_in']['id'] == data[rec]['user_id']%}
+     <!--{{data}}-->
+         {% for rec in data["response"] %}
+            {{data['cat_id'] == data["response"][rec]['category_id']}}
+            {% if data['cat_id'] == data["response"][rec]['category_id'] %}
        <div class="row margin">
                 <div class="input-field col s4" style="border-left: thick solid maroon; padding-left: 20px">
                     <div >
-                        <h4>{{ data[rec]['name'] }}</h4>
+                        <h4>{{ data["response"][rec]['name'] }}</h4>
                       <img src="http://images.media-allrecipes.com/images/60583.png" alt="Appetizer Recipes" class="hero-link__item__image">&nbsp &nbsp
-                      <h5>Time: {{ data[rec]['time'] }}</h5>
+                      <h5>Time: {{ data["response"][rec]['time'] }}</h5>
                     <h5><b>Ingredients</b></h5>
-                     <h6>{{ data[rec]['ingredients'] }}</h6> <br>
+                     <h6>{{ data["response"][rec]['ingredients'] }}</h6> <br>
 
                     <h5><b>Directions</b></h5>
-                     <p>{{ data[rec]['direction'] }}</p>
+                     <p>{{ data["response"][rec]['direction'] }}</p>
 
                 </div>
 
-                <a href="{{ url_for('update_recipe', _id=data[rec]['id'], recipe_id=data[rec]['id']) }}"
+                <a href="{{ url_for('update_recipe', _id=data['response'][rec]['id'], recipe_id=data['response'][rec]['id']) }}"
                                    class="btn-floating btn-large waves-effect waves-light blue"><i
                                         class="material-icons"><img src="{{ url_for('static', filename='img/edit.png')}}"></i></a>&nbsp &nbsp
-                                <a href="{{ url_for('del_recipe', _id=data[rec]['id'], recipe_id=data[rec]['id']) }}"
+                                <a href="{{ url_for('del_recipe', _id=data['response'][rec]['id'], recipe_id=data['response'][rec]['id']) }}"
                                    class="btn-floating btn-large waves-effect waves-light red"><i
                                         class="material-icons"><img src="{{ url_for('static', filename='img/delete.png') }}"></i></a>
 
               </div>
     </div>
-    {% endif%}
+    {% endif %}
     {%endfor%}
   </div>
 

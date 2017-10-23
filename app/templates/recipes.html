@@ -47,7 +47,6 @@
 <div class="col-md-12 z-depth-6 card-panel" style="float: left;">
      <!--{{data}}-->
          {% for rec in data["response"] %}
-            {{data['cat_id'] == data["response"][rec]['category_id']}}
             {% if data['cat_id'] == data["response"][rec]['category_id'] %}
        <div class="row margin">
                 <div class="input-field col s4" style="border-left: thick solid maroon; padding-left: 20px">

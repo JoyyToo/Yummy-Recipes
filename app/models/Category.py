@@ -110,3 +110,7 @@ class Category(object):
             "user_id": self.user_id
         }
         return True
+
+    def check_if_exists(self, id):
+
+        return True if int(id) in self.cat.keys() else False

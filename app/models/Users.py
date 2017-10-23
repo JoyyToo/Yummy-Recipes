@@ -23,7 +23,7 @@ class Users(object):
                 self.password_again = password_again
                 self.id = self.assign_id()
 
-                if self.check_if_user_exists():
+                if self.check_if_user_exists(email):
                     return {
                         "message": "User already exists",
                         "status": "error"
@@ -50,12 +50,13 @@ class Users(object):
     def login_user(self, email, password):
         """Login User"""
         if email and password:
-            if self.check_if_user_exists():
-                return {
-                    "message": "Login successful",
-                    "status": "success",
-                    "user": self.users[self.check_if_user_exists()]
-                }
+            if self.check_if_user_exists(email):
+                if self.users[self.check_if_user_exists(email)]['password'] == password:
+                    return {
+                        "message": "Login successful",
+                        "status": "success",
+                        "user": self.users[self.check_if_user_exists(email)]
+                    }
 
             return {
                 "message": "Invalid login credentials",
@@ -127,10 +128,10 @@ class Users(object):
         }
         return True
 
-    def check_if_user_exists(self):
+    def check_if_user_exists(self, email):
         """Checking if user exists"""
         for user in self.users.values():
-            if user['email'] == self.email:
+            if user['email'] == email:
                 return user['id']
         else:
             return False

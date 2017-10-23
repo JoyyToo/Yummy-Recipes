@@ -124,7 +124,7 @@ def addrecipe(_id):
         time = request.form['time']
         ingredients = request.form['ingredients']
         direction = request.form['direction']
-        category_id = session['is_logged_in']['id']
+        category_id = _id
         user_id = session['is_logged_in']['id']
 
         response = rec.create_recipe(name, time, ingredients, direction, category_id, user_id)
@@ -144,7 +144,7 @@ def recipes(_id):
     response = rec.view_recipes()
 
     return render_template('recipes.html', data={
-        "cat_id": int(cat_id),
+        "cat_id": cat_id,
         "response": response})
 
 

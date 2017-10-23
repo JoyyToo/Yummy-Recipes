@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Categories</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{{ url_for('static', filename = 'vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+
+    <!-- Custom fonts -->
+    <link href="{{ url_for('static', filename = 'vendor/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet"
+          type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet"
+          type="text/css">
+
+    <!-- CORE CSS-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/css/materialize.min.css">
+
+    <!-- Custom styles -->
+    <link href="{{ url_for('static', filename = 'css/style.css') }}" rel="stylesheet">
+
+</head>
+
+<body>
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg  fixed-top" style="background: rgba(20, 20, 20, 0);">
+    <div class="container">
+        <a class="navbar-brand" style="color:white;" href="{{ url_for('home') }}">YUMMY</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" style="color:white; border-color:white;" href="{{ url_for('logout') }}"><b>LOGOUT</b></a>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+</nav>
+<a href="{{ url_for('add_category') }}" class="btn-floating btn-large waves-effect waves-light red"><i
+        class="material-icons">+</i></a>
+
+{% if data %}
+
+
+    <div id="cat-page" class="row">
+
+
+        <div class="card-panel">
+
+            <div class="row">
+                <div>
+
+                    <p class="center login-form-text">My Categories</p>
+                    {% for cat in data %}
+                    {%if session['is_logged_in']['id'] == data[cat]['user_id']%}
+
+                        <div class="row margin center"
+                             style="background: ghostwhite; float: left; margin-left: 15px;height: 400px; width: 300px;border-style: solid">
+                            <div class="input-field col s12">
+                                <center><img src="http://images.media-allrecipes.com/images/60583.png" alt="Appetizer Recipes"
+                                             class="hero-link__item__image">&nbsp &nbsp</center>
+
+                                <h2><a class="btn waves-effect waves-light col s12" href="{{ url_for('recipes', _id=data[cat]['id']) }}"
+                                   class="waves-effect waves-light col s12">{{ data[cat]['name'] }}</a></h2>
+
+                                <p class="waves-effect waves-light col s12">{{ data[cat]['desc'] }} </p>
+
+                                <a href="{{ url_for('update_category', _id=data[cat]['id']) }}"
+                                   class="btn-floating btn-large waves-effect waves-light blue"><i
+                                        class="material-icons"><img src="{{ url_for('static', filename='img/edit.png')}}"></i></a>&nbsp &nbsp
+                                <a href="{{ url_for('del_category', cat_id=data[cat]['id']) }}"
+                                   class="btn-floating btn-large waves-effect waves-light red"><i
+                                        class="material-icons"><img src="{{ url_for('static', filename='img/delete.png') }}"></i></a>
+
+                            </div>
+                        </div>
+                     {% endif %}
+                    {% endfor %}
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+{% else %}
+    <h3 style="color: white;">You have no category available at the moment!</h3>
+
+ {% endif %}
+</body>
+<!-- SCRIPTS -->
+<!-- JQuery -->
+<script type="text/javascript" src="{{ url_for('static', filename = 'js/jquery-3.2.1.min.js') }}"></script>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="{ url_for('static', filename = 'js/popper.min.js')}}"></script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="{{ url_for('static', filename = 'js/bootstrap.min.js') }}"></script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="{{ url_for('static', filename = 'js/mdb.min.js') }}"></script>
+
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Add Recipe</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="{{ url_for('static', filename = 'vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+  
+      <!-- Custom fonts -->
+      <link href="{{ url_for('static', filename = 'vendor/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+      <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">  
+
+  <!-- CORE CSS--> 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/css/materialize.min.css">
+
+  <!-- Custom styles -->
+  <link href="{{ url_for('static', filename = 'css/style.css') }}" rel="stylesheet">
+   
+</head>
+
+<body>
+   <!-- Navigation -->
+   <nav class="navbar navbar-expand-lg  fixed-top" style="background: rgba(20, 20, 20, 0);">
+      <div class="container">
+        <a class="navbar-brand" style="color:white;" href="{{url_for('home')}}">YUMMY</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" style="color:white; border-color:white;" href="{{url_for('logout')}}"><b>LOGOUT</b></a>
+            </li>
+          </ul>
+        </div>
+       
+      </div>
+    </nav>
+   {% if data %}
+
+        {{ data }}
+
+   {% endif %}
+     
+  <div id="login-page" class="row">
+    <div class="col-md-24 z-depth-6 card-panel">
+      <form class="login-form" method="post">
+        <div class="row">
+          <div class="input-field col s12 center">
+            <p class="center login-form-text"><b>ADD RECIPE</b></p>
+          </div>
+        </div>
+        <div class="row margin">
+          <div class="input-field col s12">   
+            <input name="name" type="text">
+            <label for="name" class="center-align">Name</label>
+          </div>
+        </div>
+        <div class="row margin">
+          <div class="input-field col s12">
+           <input type="file" name="fileupload" value="fileupload" id="fileupload" input type="image" src="/wp-content/uploads/sendform.png" alt="Submit" width="50%">
+          
+        </div>
+      </div> <br><br>
+        <div class="row margin">
+            <div class="input-field col s12">
+              <input name="time" type="text">
+              <label for="time" class="center-align">Time taken</label>
+            </div>
+          </div>
+      
+        <div class="row">
+            <div class="input-field col s12">
+              <textarea id="textarea" name="ingredients" class="materialize-textarea"></textarea>
+              <label for="textarea1">Ingredients</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <textarea id="textarea1" name="direction" class="materialize-textarea"></textarea>
+              <label for="textarea1">Directions</label>
+            </div>
+          </div>
+    
+        <div class="row">
+          <div class="input-field col s12">
+            <button type="submit" value="ADD" class="btn waves-effect waves-light col s12">ADD</button>
+          </div>
+          <div class="input-field col s6 m6 l6">
+            <p class="margin medium-small">A recipe has no soul. You are the cook, give life to the recipe</p>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
+  </div>
+<!-- SCRIPTS -->
+    <!-- JQuery -->
+    <script type="text/javascript" src="{{ url_for('static', filename = 'js/jquery-3.2.1.min.js') }}"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="{{ url_for('static', filename = 'js/popper.min.js') }}"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="{{ url_for('static', filename = 'js/bootstrap.min.js') }}"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="{{ url_for('static', filename = 'js/mdb.min.js') }}"></script>
+
+</html>

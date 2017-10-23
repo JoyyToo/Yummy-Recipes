@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Signup</title>
+    <!-- Bootstrap core CSS -->
+    <link href="{{ url_for('static', filename = 'vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+
+    <!-- Custom fonts -->
+    <link href="{{ url_for('static', filename = 'vendor/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet"
+          type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet"
+          type="text/css">
+
+    <!-- CORE CSS-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/css/materialize.min.css">
+
+    <!-- Custom styles -->
+    <link href="{{ url_for('static', filename = 'css/style.css') }}" rel="stylesheet">
+
+</head>
+
+<body>
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg  fixed-top" style="background: rgba(20, 20, 20, 0);">
+    <div class="container">
+        <a class="navbar-brand" style="color:white;" href="{{ url_for('home') }}">YUMMY</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+    </div>
+</nav>
+{% if data %}
+    <h4 style="color: white;">{{ data['message'] }}</h4>
+{% endif %}
+<ul class="tab-group">
+    <li class="tab active"><a href="{{ url_for('register') }}">Sign Up</a></li>
+    <li class="tab"><a href="{{ url_for('login') }}">Log In</a></li>
+</ul>
+<div id="login-page" class="row">
+    <div class="col s12 z-depth-6 card-panel">
+        <form class="login-form" method="post" action="">
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <p class="center login-form-text">Register Here</p>
+                </div>
+            </div>
+            <div class="row margin">
+                <div class="input-field col s12">
+                    <i class="mdi-social-person-outline prefix"></i>
+                    <input id="username" name="username" type="text" class="validate" >
+                    <label for="username" class="center-align">Username</label>
+                </div>
+            </div>
+            <div class="row margin">
+                <div class="input-field col s12">
+                    <i class="mdi-communication-email prefix"></i>
+                    <input id="email" type="email" name="email" class="validate" >
+                    <label for="email" class="center-align">Email</label>
+                </div>
+            </div>
+            <div class="row margin">
+                <div class="input-field col s12">
+                    <i class="mdi-action-lock-outline prefix"></i>
+                    <input id="password" type="password" name="password" class="validate" >
+                    <label for="password">Password</label>
+                </div>
+            </div>
+            <div class="row margin">
+                <div class="input-field col s12">
+                    <i class="mdi-action-lock-outline prefix"></i>
+                    <input id="password-again" name="password-again" type="password" >
+                    <label for="password-again">Re-type password</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <button type="submit" class="btn waves-effect waves-light col s12">Register Now</button>
+                </div>
+                <div class="input-field col s12">
+                    <p class="margin center medium-small sign-up">Already have an account? <a
+                            href="{{ url_for('login') }}">Login</a></p>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- SCRIPTS -->
+<!-- JQuery -->
+<script type="text/javascript" src="{{ url_for('static', filename = 'js/jquery-3.2.1.min.js') }}"></script>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="{{ url_for('static', filename = 'js/popper.min.js') }}"></script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="{{ url_for('static', filename = 'js/bootstrap.min.js') }}"></script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="{{ url_for('static', filename = 'js/mdb.min.js') }}"></script>
+
+</body>
+
+</html>

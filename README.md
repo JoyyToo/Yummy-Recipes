@@ -1,5 +1,4 @@
-[![Build Status](https://travis-ci.org/JoyyToo/Yummy-Recipes.svg?branch=master)](https://travis-ci.org/JoyyToo/Yummy-Recipes)
-# Yummy Recipes
+[![Build Status](https://travis-ci.org/JoyyToo/Yummy-Recipes.svg?branch=ft-app)](https://travis-ci.org/JoyyToo/Yummy-Recipes)
 
 It contains:
  - Designs

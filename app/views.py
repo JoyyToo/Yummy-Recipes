@@ -152,7 +152,7 @@ def recipes(_id):
 def del_recipe(_id, recipe_id):
     response = rec.delete_recipe(recipe_id) if rec.delete_recipe(recipe_id) else None
     print(response)
-    return redirect(url_for('recipes', _id='recipe_id'))
+    return redirect(url_for('recipes', _id=recipe_id))
 
 
 @app.route('/category/<_id>/updaterecipe/<recipe_id>', methods=['GET', 'POST'])
@@ -164,7 +164,7 @@ def update_recipe(_id, recipe_id):
         time = request.form['time']
         ingredients = request.form['ingredients']
         direction = request.form['direction']
-        category_id = session['is_logged_in']['id']
+        category_id = _id
         user_id = session['is_logged_in']['id']
 
         response = rec.update_recipe(recipe_id, name, time, ingredients, direction, category_id, user_id)

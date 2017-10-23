@@ -1,4 +1,5 @@
-from app import app, render_template, redirect, request, url_for, jsonify, session
+from app import app, render_template, redirect, request, url_for, jsonify
+from flask import session
 from app.models.Users import Users
 from app.models.Category import Category
 from app.models.Recipe import Recipe
@@ -21,6 +22,7 @@ def login():
         password = request.form['password']
 
         response = user.login_user(email, password)
+
         print(response)
         if response['status'] == 'success':
             session['is_logged_in'] = {
@@ -53,9 +55,8 @@ def register():
 @app.route('/logout', methods=['GET'])
 def logout():
     if 'is_logged_in' in session.keys():
-        del session['is_logged_in']
-        return redirect(url_for('home'))
-    return redirect(url_for('register'))
+        session.pop('is_logged_in', None)
+    return redirect(url_for('login'))
 
 
 @app.route('/categories', methods=['GET'])
@@ -135,11 +136,16 @@ def addrecipe(_id):
 
 @app.route('/category/<_id>/recipes', methods=['GET'])
 def recipes(_id):
+    cat_id = _id
+    if not cat.check_if_exists(cat_id):
+        return redirect(url_for('add_category'))
     if 'is_logged_in' not in session.keys():
         return redirect(url_for('login'))
     response = rec.view_recipes()
 
-    return render_template('recipes.html', data=response)
+    return render_template('recipes.html', data={
+        "cat_id": int(cat_id),
+        "response": response})
 
 
 @app.route('/category/<_id>/delrecipe/<recipe_id>', methods=['GET'])

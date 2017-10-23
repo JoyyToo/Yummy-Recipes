@@ -10,7 +10,7 @@ install:
 
 script:
   - "source .env"
-  - "coverage run -m unittest discover && coverage report"
+  - "coverage run -m unittest discover --cover-package=tests --cover-package=app/models/ && coverage report"
 
 after_success:
   - "coveralls"

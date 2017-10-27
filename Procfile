@@ -1,1 +1,1 @@
-web: gunicorn run:source .env app
+web: gunicorn --env run:app

@@ -42,7 +42,6 @@ shutilwhich==1.1.0
 six==1.10.0
 SQLAlchemy==1.1.14
 stevedore==1.27.1
-unity-lens-photos==1.0
 urllib3==1.22
 virtualenv==15.1.0
 virtualenv-clone==0.2.6

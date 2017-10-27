@@ -37,6 +37,12 @@ class TestForClassRecipe(unittest.TestCase):
         self.assertEqual({"status": "error", "message": 'Fill all fields'}, result)
 
     # tests for update recipe function
+    def test_for_update_missing_recipe(self):
+        """Test for update missing recipe"""
+        self.rec.update_recipe(0, 'biryani', '1 hour', '1 tbsp', 'stir', 1, 2)
+        result = self.rec.update_recipe(1, 'biryani', '1 hour', '1 tbsp', 'stir', 1, 2)
+        self.assertEqual({"status": "error", "message": "Recipe does not exist"}, result)
+
     def test_for_empty_update_fields(self):
         """Test for empty update field"""
         result = self.rec.update_recipe(0, '', '', '', '', 0, 0)
@@ -61,6 +67,12 @@ class TestForClassRecipe(unittest.TestCase):
         """Test for empty update direction field"""
         result = self.rec.update_recipe(0, 'biryani', '1 hour', '1 tbsp', '', 1, 2)
         self.assertEqual({"status": "error", "message": 'Fill all fields'}, result)
+
+    def test_for_delete_non_existing_recipe(self):
+        """Test for delete non existing recipe"""
+        self.rec.delete_recipe(2)
+        result = self.rec.delete_recipe(0)
+        self.assertEqual({"status": "error", "message": "Recipe does not exist"}, result)
 
 
 if __name__ == '__main__':

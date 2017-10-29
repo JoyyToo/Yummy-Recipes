@@ -1,94 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Recipes</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Recipes</title>
 
-  <!-- Bootstrap core CSS -->
-  <link href="{{ url_for('static', filename ='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
-  
-      <!-- Custom fonts -->
-      <link href="{{ url_for('static', filename = 'vendor/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
-      <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">  
+    <!-- Bootstrap core CSS -->
+    <link href="{{ url_for('static', filename ='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
 
-  <!-- CORE CSS--> 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/css/materialize.min.css">
+    <!-- Custom fonts -->
+    <link href="{{ url_for('static', filename = 'vendor/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet"
+          type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet"
+          type="text/css">
 
-  <!-- Custom styles -->
-  <link href="{{ url_for('static', filename = 'css/style.css')}}" rel="stylesheet">
-   
+    <!-- CORE CSS-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/css/materialize.min.css">
+
+    <!-- Custom styles -->
+    <link href="{{ url_for('static', filename = 'css/style.css')}}" rel="stylesheet">
+
 </head>
 
 <body>
-   <!-- Navigation -->
-   <nav class="navbar navbar-expand-lg  fixed-top" style="background: rgba(20, 20, 20, 0);">
-      <div class="container">
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg  fixed-top" style="background: rgba(20, 20, 20, 0);">
+    <div class="container">
         <a class="navbar-brand" style="color:white;" href="{{url_for('home')}}">YUMMY</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <a class="nav-link" style="color:white; border-color:white;"  href="{{url_for('logout')}}"><b>LOGOUT</b></a>
-            </li>
-          </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" style="color:white; border-color:white;"
+                       href="{{url_for('logout')}}"><b>LOGOUT</b></a>
+                </li>
+            </ul>
         </div>
 
-      </div>
-    </nav>
-      <a href="{{url_for('addrecipe', _id=data['cat_id'])}}" class="btn-floating btn-large waves-effect waves-light red">
-                                    <i class="material-icons">+</i></a>&nbsp &nbsp
-    {%if data%}
+    </div>
+</nav>
+<a href="{{url_for('addrecipe', _id=data['cat_id'])}}" class="btn-floating btn-large waves-effect waves-light red"
+   style="margin: 30px;">
+    <i class="material-icons">+</i></a>&nbsp &nbsp
+{%if data['response']%}
 
 
-<div class="col-md-12 z-depth-6 card-panel" style="float: left;">
-     <!--{{data}}-->
-         {% for rec in data["response"] %}
-            {% if data['cat_id'] == data["response"][rec]['category_id'] %}
-       <div class="row margin">
-                <div class="input-field col s4" style="border-left: thick solid maroon; padding-left: 20px">
-                    <div >
-                        <h4>{{ data["response"][rec]['name'] }}</h4>
-                      <img src="http://images.media-allrecipes.com/images/60583.png" alt="Appetizer Recipes" class="hero-link__item__image">&nbsp &nbsp
-                      <h5>Time: {{ data["response"][rec]['time'] }}</h5>
-                    <h5><b>Ingredients</b></h5>
-                     <h6>{{ data["response"][rec]['ingredients'] }}</h6> <br>
+<div class="">
+    {% for rec in data["response"] %}
+    {% if data['cat_id'] == data["response"][rec]['category_id'] %}
+    <div class="row margin " style="background: whitesmoke; width: 300px; float: left; padding: 30px;">
+        <div class="input-field col s4" style="border-left: thick solid maroon; padding-left: 20px;">
+            <div>
+                <h4>{{ data["response"][rec]['name'] }}</h4>
+                <img src="{{ url_for('static', filename='uploaded_images/'+data['response'][rec]['image_url'])}}"
+                                         height="124" width="124"
+                     class="hero-link__item__image">&nbsp &nbsp
+                <h5>Time: {{ data["response"][rec]['time'] }}</h5>
+                <h5><b>Ingredients</b></h5>
+                <h6>{{ data["response"][rec]['ingredients'] }}</h6> <br>
 
-                    <h5><b>Directions</b></h5>
-                     <p>{{ data["response"][rec]['direction'] }}</p>
+                <h5><b>Directions</b></h5>
+                <p>{{ data["response"][rec]['direction'] }}</p>
 
-                </div>
+            </div>
 
-                <a href="{{ url_for('update_recipe', _id=data['response'][rec]['id'], recipe_id=data['response'][rec]['id']) }}"
-                                   class="btn-floating btn-large waves-effect waves-light blue"><i
-                                        class="material-icons"><img src="{{ url_for('static', filename='img/edit.png')}}"></i></a>&nbsp &nbsp
-                                <a href="{{ url_for('del_recipe', _id=data['response'][rec]['id'], recipe_id=data['response'][rec]['id']) }}"
-                                   class="btn-floating btn-large waves-effect waves-light red"><i
-                                        class="material-icons"><img src="{{ url_for('static', filename='img/delete.png') }}"></i></a>
+            <a href="{{ url_for('update_recipe', _id=data['response'][rec]['category_id'], recipe_id=data['response'][rec]['id']) }}"
+               class="btn-floating btn-large waves-effect waves-light blue"><i
+                    class="material-icons"><img src="{{ url_for('static', filename='img/edit.png')}}"></i></a>&nbsp
+            &nbsp
+            <a href="{{ url_for('del_recipe', _id=data['response'][rec]['category_id'], recipe_id=data['response'][rec]['id']) }}"
+               class="btn-floating btn-large waves-effect waves-light red"><i
+                    class="material-icons"><img src="{{ url_for('static', filename='img/delete.png') }}"></i></a>
 
-              </div>
+        </div>
     </div>
     {% endif %}
     {%endfor%}
-  </div>
+</div>
 
 {% else %}
-    <h3 style="color: white;">You have no recipe at the moment!</h3>
+<h3 style="color: white;">You have no recipe at the moment!</h3>
 
 {% endif%}
 </body>
-    
+
 <!-- SCRIPTS -->
-    <!-- JQuery -->
-    <script type="text/javascript" src="{{ url_for('static', filename = 'js/jquery-3.2.1.min.js') }}"></script>
-    <!-- Bootstrap tooltips -->
-    <script type="text/javascript" src="{{ url_for('static', filename = 'js/popper.min.js') }}"></script>
-    <!-- Bootstrap core JavaScript -->
-    <script type="text/javascript" src="{{ url_for('static', filename = 'js/bootstrap.min.js') }}"></script>
-    <!-- MDB core JavaScript -->
-    <script type="text/javascript" src="{{ url_for('static', filename = 'js/mdb.min.js') }}"></script>
+<!-- JQuery -->
+<script type="text/javascript" src="{{ url_for('static', filename = 'js/jquery-3.2.1.min.js') }}"></script>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="{{ url_for('static', filename = 'js/popper.min.js') }}"></script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="{{ url_for('static', filename = 'js/bootstrap.min.js') }}"></script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="{{ url_for('static', filename = 'js/mdb.min.js') }}"></script>
 
 </html>

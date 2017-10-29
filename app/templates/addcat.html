@@ -39,12 +39,15 @@
 
       </div>
     </nav>
-     {% if data %}
-            <h4 style="color: white;">{{ data['message'] }}</h4>
-        {% endif %}
+{% if data %}
+<div class="alert alert-danger alert-dismissable">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+    <strong>{{ data['message'] }}</strong>
+</div>
+{% endif %}
   <div id="login-page" class="row">
     <div class="col s12 z-depth-6 card-panel">
-      <form class="login-form" method="post">
+      <form class="login-form" method="post" enctype="multipart/form-data">
         <div class="row">
           <div class="input-field col s12 center">
             <p class="center login-form-text">Add recipe Category</p>
@@ -52,35 +55,20 @@
         </div>
         <div class="row margin">
           <div class="input-field col s12">
-            <input name="name" type="text">
+            <input name="name" type="text" id="name">
             <label for="name" class="center-align">Name</label>
           </div>
         </div>
-                
+
         <div class="row">
             <div class="input-field col s12">
               <textarea id="textarea" name="description" class="materialize-textarea"></textarea>
               <label for="textarea">Description</label>
             </div>
           </div>
-          <script>
-function readURL(input) {
-    if (input.files && input.files[0]) {
-        var reader = new FileReader();
-
-        reader.onload = function (e) {
-            document.getElementById('blah').src =  e.target.result;
-        }
-
-        reader.readAsDataURL(input.files[0]);
-    }
-}
-</script>
-         <input type='file' id="imgInp" onchange="readURL(this);" />
-        <img id="blah" src="#" alt="your image" />
-             
+         <input type='file' name="file" />
         <div class="row">
-          <div class="input-field col s12">
+          <div class="input-field col s12" style="margin-top: 40px;">
             <button type="submit"  class="btn waves-effect waves-light col s12" value="ADD">ADD</button>
           </div>
         </div>

@@ -1,4 +1,4 @@
-# Yummy Recipes
+[![Build Status](https://travis-ci.org/JoyyToo/Yummy-Recipes.svg?branch=ft-app)](https://travis-ci.org/JoyyToo/Yummy-Recipes) [![Coverage Status](https://coveralls.io/repos/github/JoyyToo/Yummy-Recipes/badge.svg?branch=ft-app)](https://coveralls.io/github/JoyyToo/Yummy-Recipes?branch=ft-app)
 
 It contains:
  - Designs
@@ -33,3 +33,54 @@ Contains a Yummy Recipes flask app that provides a platform for users to keep tr
 
 ## Recipes
 ![Alt text](https://joyytoo.github.io/Yummy-Recipes/Designs/UI/Screenshots/rec.png?raw=true "Recipes")
+
+## Prerequisites
+
+Python 2.6 or a later version
+
+### Setup
+
+Use the following:
+
+```
+$ sudo pip install virtualenv
+$ mkdir Yummy-Recipes
+$ cd Yummy-Recipes
+$ virtualenv venv
+```
+
+Activate virtual environment:
+
+```
+$ source .venv/bin/activate
+```
+
+To set up flask:
+
+Enter the command to install in virtual environment:
+
+```
+$ pip install Flask
+```
+
+To set up unit testing environment:
+
+```
+$ pip install nose
+```
+
+To execute a test file:
+
+```
+$ source .env
+$ nosetests
+```
+
+## Running App
+
+- `cd` directory of extracted project
+- run using:$ ` source .env`
+            $ ` python run.py`
+
+
+

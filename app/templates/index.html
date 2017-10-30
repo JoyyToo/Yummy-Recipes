@@ -27,15 +27,24 @@
 <body>
 
 <!-- Navigation -->
-<nav class="navbar navbar-expand-lg  fixed-top" style="background: rgba(20, 20, 20, 0);">
+<nav class="navbar navbar-expand fixed-top" style="background: rgba(20, 20, 20, 0);">
     <div class="container">
         <a class="navbar-brand" style="color:white;" href="{{ url_for('home') }}">YUMMY</a>
+        <a class="navbar-brand" style="color:white;">
+            Hello
+            {%if 'is_logged_in' not in session.keys()%}
+            Guest
+            {% else %}
+            {{session['is_logged_in']['username']}}
+            {% endif %}
+        </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
                 aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
     </div>
+    <a class="navbar-brand" style="color:white;" href="{{ url_for('logout') }}">Logout</a>
 </nav>
 
 <!-- Header -->
@@ -45,7 +54,8 @@
             <h1>Yummy recipes</h1> <br>
             <h3>Makes your cooking easier and better</h3>
             <hr class="intro-divider">
-            <ul class="list-inline intro-social-buttons">
+            {%if 'is_logged_in' not in session.keys()%}
+            <ul class="list-inline intro-social-buttons" style="margin: 70px;">
                 <li class="list-inline-item">
                     <a href="{{ url_for('login') }}" style="color:white; border-color:white;" class="btn  btn-lg">
                         <span class="network-name"><b>LOG IN</b></span>
@@ -56,11 +66,24 @@
                         <span class="network-name"><b>SIGN UP</b></span>
                     </a>
                 </li>
+                {% else %}
+                <ul class="list-inline intro-social-buttons" style="margin: 70px;">
+                    <li class="list-inline-item">
+                        <a href="{{ url_for('add_category') }}" style="color:white; border-color:white;" class="btn  btn-lg btn-success">
+                            <span class="network-name"><b>Add Category</b></span>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="{{ url_for('get_categories') }}" style="color:white; border-color:white;" class="btn btn-lg btn-primary">
+                            <span class="network-name"><b>View Categories</b></span>
+                        </a>
+                    </li>
+                    {% endif %}
 
-            </ul>
-            <div style="margin-top: 300px">
-                <p class="copyright ">Copyright &copy; Yummy Recipes 2017. All Rights Reserved</p>
-            </div>
+                </ul>
+                <div style="margin-top: 300px">
+                    <p class="copyright ">Copyright &copy; Yummy Recipes 2017. All Rights Reserved</p>
+                </div>
         </div>
     </div>
 </div>

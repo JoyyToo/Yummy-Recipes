@@ -1,4 +1,5 @@
 """Category class"""
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 
 
 class Category(object):
@@ -11,15 +12,31 @@ class Category(object):
         self.name = None
         self.description = None
         self.user_id = None
+        self.image_url = None
 
-    def create_category(self, name, description, user_id):
+    def create_category(self, name, description, user_id, image_url):
         """create category"""
         if name and description and user_id:
             self.name = name
             self.description = description
             self.id = self.assign_id()
             self.user_id = user_id
-
+            self.image_url = image_url
+            if not image_url:
+                return {
+                    "message": "No file chosen",
+                    "status": "error"
+                }
+            if not self.allowed_file(image_url.filename):
+                return {
+                    "message": "File chosen is not allowed",
+                    "status": "error"
+                }
+            if self.check_if_name_exists(name, user_id):
+                return {
+                    "message": "Category already exists",
+                    "status": "error"
+                }
             if self.save():
                 return {
                     "message": "Category created successfully",
@@ -36,16 +53,31 @@ class Category(object):
             "status": "error"
         }
 
-    def update_category(self, cat_id, name, description, user_id):
+    def update_category(self, cat_id, name, description, user_id, image_url):
         """update category"""
         cat_id = int(cat_id)
         if cat_id in self.cat.keys():
             if name and description and user_id:
+
+                image = self.cat[cat_id]["image_url"] if not image_url else image_url.filename
+                if image_url and not self.allowed_file(image_url.filename):
+                        return {
+                            "message": "File chosen is not allowed",
+                            "status": "error",
+                            "category": self.cat[cat_id]
+                        }
+                if self.validate_update(name, user_id, cat_id):
+                    return {
+                        "message": "Category already exists",
+                        "status": "error",
+                        "category": self.cat[cat_id]
+                    }
                 self.cat[cat_id] = {
                     "id": cat_id,
                     "name": name,
                     "desc": description,
-                    "user_id": self.user_id
+                    "user_id": self.user_id,
+                    "image_url": image
                 }
                 return {
                     "message": "Category updated successfully",
@@ -54,11 +86,12 @@ class Category(object):
                 }
             return {
                 "message": "Fill all the fields",
-                "status": "error"
+                "status": "error",
+                "category": self.cat[cat_id]
             }
         return {
             "message": "Category does not exist",
-            "status": "error"
+            "status": "error",
         }
 
     def delete_category(self, cat_id):
@@ -74,10 +107,20 @@ class Category(object):
             "status": "error"
         }
 
-    def all_categories(self):
+    def all_categories(self, user_id):
         """display all categories"""
+        categories = {}
         if self.cat:
-            return self.cat
+            for category in self.cat:
+                if self.cat[category]['user_id'] == user_id:
+                    categories[category] = {
+                        "id": self.cat[category]['id'],
+                        "name": self.cat[category]['name'],
+                        "desc": self.cat[category]['desc'],
+                        "user_id": self.cat[category]['user_id'],
+                        "image_url": self.cat[category]['image_url'],
+                    }
+            return categories
 
     def single_category(self, cat_id):
         """display single category"""
@@ -107,10 +150,36 @@ class Category(object):
             "id": self.id,
             "name": self.name,
             "desc": self.description,
-            "user_id": self.user_id
+            "user_id": self.user_id,
+            "image_url": self.image_url.filename
         }
         return True
 
     def check_if_exists(self, id):
 
         return True if int(id) in self.cat.keys() else False
+
+    def allowed_file(self, file):
+        return '.' in file and \
+               file.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+    def check_if_name_exists(self, name, user_id):
+        """Checking if category exists"""
+
+        for category in self.cat.values():
+            if category['name'] == name and category['user_id'] == user_id:
+                    return True
+        else:
+            return False
+
+    def validate_update(self, name, user_id, cat_id):
+        categories = []
+        name = name.strip()
+        for category in self.cat.values():
+            if category['name'] == name and category['user_id'] == user_id:
+                categories.append(category)
+        if len(categories) == 1:
+            return False if self.cat[cat_id]['name'] == name else True
+        if len(categories) > 1:
+            return True
+        return False

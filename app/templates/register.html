@@ -36,7 +36,10 @@
     </div>
 </nav>
 {% if data %}
-    <h4 style="color: white;">{{ data['message'] }}</h4>
+<div class="alert alert-danger alert-dismissable">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+    <strong>{{ data['message'] }}</strong>
+</div>
 {% endif %}
 <ul class="tab-group">
     <li class="tab active"><a href="{{ url_for('register') }}">Sign Up</a></li>

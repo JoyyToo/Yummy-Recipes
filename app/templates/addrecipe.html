@@ -39,35 +39,35 @@
        
       </div>
     </nav>
-   {% if data %}
+{% if data %}
+<div class="alert alert-danger alert-dismissable">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+    <strong>{{ data['message'] }}</strong>
+</div>
+{% endif %}
 
-        {{ data }}
-
-   {% endif %}
-     
   <div id="login-page" class="row">
     <div class="col-md-24 z-depth-6 card-panel">
-      <form class="login-form" method="post">
-        <div class="row">
+      <form class="login-form" method="post" enctype="multipart/form-data">        <div class="row">
           <div class="input-field col s12 center">
             <p class="center login-form-text"><b>ADD RECIPE</b></p>
           </div>
         </div>
         <div class="row margin">
-          <div class="input-field col s12">   
-            <input name="name" type="text">
+          <div class="input-field col s12">
+            <input name="name" type="text" id="name">
             <label for="name" class="center-align">Name</label>
           </div>
         </div>
         <div class="row margin">
           <div class="input-field col s12">
-           <input type="file" name="fileupload" value="fileupload" id="fileupload" input type="image" src="/wp-content/uploads/sendform.png" alt="Submit" width="50%">
-          
+           <input type="file" name="file" id="fileupload">
+
         </div>
       </div> <br><br>
         <div class="row margin">
             <div class="input-field col s12">
-              <input name="time" type="text">
+              <input name="time" type="text" id="time">
               <label for="time" class="center-align">Time taken</label>
             </div>
           </div>

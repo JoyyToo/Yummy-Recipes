@@ -3,6 +3,7 @@ ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 
 
 class Category(object):
+    """class category"""
     cat = {}
     last_id = None
 
@@ -156,10 +157,11 @@ class Category(object):
         return True
 
     def check_if_exists(self, id):
-
+        """Check if user exists"""
         return True if int(id) in self.cat.keys() else False
 
     def allowed_file(self, file):
+        """check if file is allowed"""
         return '.' in file and \
                file.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
@@ -173,6 +175,7 @@ class Category(object):
             return False
 
     def validate_update(self, name, user_id, cat_id):
+        """validate update"""
         categories = []
         name = name.strip()
         for category in self.cat.values():

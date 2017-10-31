@@ -3,6 +3,7 @@ ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 
 
 class Recipe(object):
+    """class recipe"""
     rec = {}
     last_id = None
 
@@ -58,7 +59,8 @@ class Recipe(object):
             "status": "error"
         }
 
-    def update_recipe(self, recipe_id, name, time, ingredients, direction, category_id, user_id, image_url):
+    def update_recipe(self, recipe_id, name, time, ingredients,
+                      direction, category_id, user_id, image_url):
         """update recipe"""
         recipe_id = int(recipe_id)
         if int(recipe_id) in self.rec.keys():
@@ -187,6 +189,7 @@ class Recipe(object):
         return _id
 
     def allowed_file(self, file):
+        """defining allowed files"""
         return '.' in file and \
                file.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
@@ -200,6 +203,7 @@ class Recipe(object):
             return False
 
     def validate_update(self, name, user_id, rec_id):
+        """validate update function"""
         recipes = []
         name = name.strip()
         for recipe in self.rec.values():

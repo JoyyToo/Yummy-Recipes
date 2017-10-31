@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/JoyyToo/Yummy-Recipes.svg?branch=ft-app)](https://travis-ci.org/JoyyToo/Yummy-Recipes) [![Coverage Status](https://coveralls.io/repos/github/JoyyToo/Yummy-Recipes/badge.svg?branch=ft-app)](https://coveralls.io/github/JoyyToo/Yummy-Recipes?branch=ft-app)
+[![Build Status](https://travis-ci.org/JoyyToo/Yummy-Recipes.svg?branch=master)](https://travis-ci.org/JoyyToo/Yummy-Recipes) [![Coverage Status](https://coveralls.io/repos/github/JoyyToo/Yummy-Recipes/badge.svg?branch=ft-app)](https://coveralls.io/github/JoyyToo/Yummy-Recipes?branch=ft-app)
 
 It contains:
  - Designs

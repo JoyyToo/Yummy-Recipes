@@ -1,5 +1,4 @@
-from app.views import app
-from waitress import serve
+from app import app
 
-if __name__ == "__main__":
-    serve(app, port=8080)
+if __name__ == '__main__':
+    app.run(debug=True)

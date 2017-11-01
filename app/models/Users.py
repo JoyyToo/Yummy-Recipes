@@ -7,6 +7,7 @@ class Users(object):
     last_id = None
 
     def __init__(self):
+        """Initialization"""
         self.username = None
         self.email = None
         self.password = None
@@ -16,29 +17,40 @@ class Users(object):
     def register_user(self, username, email, password, password_again):
         """Register user"""
         if username and email and password and password_again:
-            if password == password_again:
-                self.username = username
-                self.email = email
-                self.password = password
-                self.password_again = password_again
-                self.id = self.assign_id()
 
-                if self.check_if_user_exists(email):
-                    return {
-                        "message": "User already exists",
-                        "status": "error"
-                    }
+            if username.strip() and email.strip() and password.strip() and password_again.strip():
+                if password == password_again:
+                    if len(password) < 6:
+                        return {
+                            "message": "Password must be more than 6 characters",
+                            "status": "error"
+                        }
+                    self.username = username
+                    self.email = email
+                    self.password = password
+                    self.password_again = password_again
+                    self.id = self.assign_id()
 
-                if self.save():
-                    return {
-                        "message": "User created successfully",
-                        "status": "success",
-                        "user": self.users[self.id]
-                    }
+                    if self.check_if_user_exists(email):
+                        return {
+                            "message": "User already exists",
+                            "status": "error"
+                        }
 
+                    if self.save():
+                        return {
+                            "message": "User created successfully",
+                            "status": "success",
+                            "user": self.users[self.id]
+                        }
+
+                return {
+                    'message': 'Passwords do not match',
+                    'status': 'error'
+                }
             return {
-                'message': 'Passwords do not match',
-                'status': 'error'
+                "message": "Invalid character input",
+                "status": "error"
             }
 
         else:
@@ -50,6 +62,11 @@ class Users(object):
     def login_user(self, email, password):
         """Login User"""
         if email and password:
+            if len(password) < 6:
+                return {
+                    "message": "Password must be more than 6 characters",
+                    "status": "error"
+                }
             if self.check_if_user_exists(email):
                 if self.users[self.check_if_user_exists(email)]['password'] == password:
                     return {

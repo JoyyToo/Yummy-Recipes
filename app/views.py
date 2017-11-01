@@ -1,6 +1,7 @@
+""" App views file"""
 from werkzeug.utils import secure_filename
 
-from app import app, render_template, redirect, request, url_for, jsonify, os
+from app import app, render_template, redirect, request, url_for, os
 from flask import session
 from app.models.Users import Users
 from app.models.Category import Category
@@ -13,11 +14,13 @@ rec = Recipe()
 
 @app.route('/')
 def home():
+    """Landing page"""
     return render_template('index.html')
 
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
+    """Login page"""
     if 'is_logged_in' in session.keys():
         return redirect(url_for('home'))
     response = None
@@ -33,13 +36,14 @@ def login():
                 "password": response['user']['password'],
                 "id": response['user']['id']
             }
-            return redirect(url_for('get_categories'))
+            return redirect(url_for('home'))
 
     return render_template('login.html', data=response)
 
 
 @app.route('/register', methods=['POST', 'GET'])
 def register():
+    """Register page"""
     if 'is_logged_in' in session.keys():
         return redirect(url_for('home'))
     response = None
@@ -59,14 +63,15 @@ def register():
 
 @app.route('/logout', methods=['GET'])
 def logout():
+    """Logout page"""
     if 'is_logged_in' in session.keys():
         session.pop('is_logged_in', None)
     return redirect(url_for('login'))
 
 
 @app.route('/categories', methods=['GET'])
-@app.route('/categories/', methods=['GET'])
 def get_categories():
+    """Get categories"""
     if 'is_logged_in' not in session.keys():
         return redirect(url_for('login'))
     user_id = session['is_logged_in']['id']
@@ -76,6 +81,7 @@ def get_categories():
 
 @app.route('/addcategory', methods=['GET', 'POST'])
 def add_category():
+    """Add category"""
     response = None
     if 'is_logged_in' not in session.keys():
         return redirect(url_for('login'))
@@ -94,18 +100,21 @@ def add_category():
 
 @app.route('/categories/<cat_id>', methods=['GET'])
 def get_category(cat_id):
+    """Get single category"""
     response = cat.single_category(cat_id)
     return render_template('singlecategory.html', data=response)
 
 
 @app.route('/delcategory/<cat_id>', methods=['GET'])
 def del_category(cat_id):
+    """Delete category"""
     response = cat.delete_category(cat_id) if cat.delete_category(cat_id) else None
     return redirect(url_for('get_categories'))
 
 
 @app.route('/updatecategory/<_id>', methods=['GET', 'POST'])
 def update_category(_id):
+    """Update category"""
     if 'is_logged_in' not in session.keys():
         return redirect(url_for('login'))
     response = cat.single_category(_id)
@@ -130,6 +139,7 @@ def update_category(_id):
 
 @app.route('/category/<_id>/addrecipe', methods=['POST', 'GET'])
 def addrecipe(_id):
+    """Add recipe"""
     response = None
     if 'is_logged_in' not in session.keys():
         return redirect(url_for('login'))
@@ -142,7 +152,8 @@ def addrecipe(_id):
         user_id = session['is_logged_in']['id']
         image = request.files['file']
 
-        response = rec.create_recipe(name, time, ingredients, direction, category_id, user_id, image)
+        response = rec.create_recipe(name, time, ingredients, direction,
+                                     category_id, user_id, image)
         if response['status'] == 'success':
             filename = secure_filename(image.filename)
             image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
@@ -153,6 +164,7 @@ def addrecipe(_id):
 
 @app.route('/category/<_id>/recipes', methods=['GET'])
 def recipes(_id):
+    """Available recipes"""
     cat_id = _id
     if not cat.check_if_exists(cat_id):
         return redirect(url_for('add_category'))
@@ -168,12 +180,14 @@ def recipes(_id):
 
 @app.route('/category/<_id>/delrecipe/<recipe_id>', methods=['GET'])
 def del_recipe(_id, recipe_id):
+    """Delete recipe"""
     response = rec.delete_recipe(recipe_id) if rec.delete_recipe(recipe_id) else None
     return redirect(url_for('recipes', _id=_id))
 
 
 @app.route('/category/<_id>/updaterecipe/<recipe_id>', methods=['GET', 'POST'])
 def update_recipe(_id, recipe_id):
+    """Update recipe"""
     if 'is_logged_in' not in session.keys():
         return redirect(url_for('login'))
     response = rec.single_recipe(recipe_id)
@@ -188,7 +202,8 @@ def update_recipe(_id, recipe_id):
         if request.files['file']:
             image = request.files['file']
 
-        response = rec.update_recipe(recipe_id, name, time, ingredients, direction, category_id, user_id, image)
+        response = rec.update_recipe(recipe_id, name, time, ingredients,
+                                     direction, category_id, user_id, image)
         if response['status'] == 'success':
             if image:
                 filename = secure_filename(image.filename)

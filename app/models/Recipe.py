@@ -20,38 +20,43 @@ class Recipe(object):
     def create_recipe(self, name, time, ingredients, direction, category_id, user_id, image_url):
         """create recipe"""
         if name and time and ingredients and direction and category_id and user_id:
-            self.name = name
-            self.time = time
-            self.ingredients = ingredients
-            self.direction = direction
-            self.category_id = category_id
-            self.user_id = user_id
-            self.id = self.assign_id()
-            self.image_url = image_url
+            if name.strip() and time.strip() and ingredients.strip() and direction.strip():
+                self.name = name
+                self.time = time
+                self.ingredients = ingredients
+                self.direction = direction
+                self.category_id = category_id
+                self.user_id = user_id
+                self.id = self.assign_id()
+                self.image_url = image_url
 
-            if not image_url:
+                if not image_url:
+                    return {
+                        "message": "No file chosen",
+                        "status": "error"
+                    }
+                if not self.allowed_file(image_url.filename):
+                    return {
+                        "message": "File chosen is not allowed",
+                        "status": "error"
+                    }
+                if self.check_if_name_exists(name, user_id):
+                    return {
+                        "message": "Recipe already exists",
+                        "status": "error"
+                    }
+                if self.save():
+                    return {
+                        "message": "Recipe added successfully",
+                        "status": "success",
+                        "recipe": self.rec[self.id]
+                    }
                 return {
-                    "message": "No file chosen",
+                    "message": "Recipe exists",
                     "status": "error"
-                }
-            if not self.allowed_file(image_url.filename):
-                return {
-                    "message": "File chosen is not allowed",
-                    "status": "error"
-                }
-            if self.check_if_name_exists(name, user_id):
-                return {
-                    "message": "Recipe already exists",
-                    "status": "error"
-                }
-            if self.save():
-                return {
-                    "message": "Recipe added successfully",
-                    "status": "success",
-                    "recipe": self.rec[self.id]
                 }
             return {
-                "message": "Recipe exists",
+                "message": "Invalid character input",
                 "status": "error"
             }
         return {
@@ -65,34 +70,39 @@ class Recipe(object):
         recipe_id = int(recipe_id)
         if int(recipe_id) in self.rec.keys():
             if recipe_id and name and time and ingredients and direction and category_id and user_id:
+                if name.strip() and time.strip() and ingredients.strip() and direction.strip():
 
-                image = self.rec[recipe_id]["image_url"] if not image_url else image_url.filename
-                if image_url and not self.allowed_file(image_url.filename):
+                    image = self.rec[recipe_id]["image_url"] if not image_url else image_url.filename
+                    if image_url and not self.allowed_file(image_url.filename):
+                            return {
+                                "message": "File chosen is not allowed",
+                                "status": "error",
+                                "recipe": self.rec[recipe_id]
+                            }
+                    if self.validate_update(name, user_id, recipe_id):
                         return {
-                            "message": "File chosen is not allowed",
+                            "message": "Recipe already exists",
                             "status": "error",
                             "recipe": self.rec[recipe_id]
                         }
-                if self.validate_update(name, user_id, recipe_id):
+                    self.rec[recipe_id] = {
+                        "id": recipe_id,
+                        "name": name,
+                        "time": time,
+                        "ingredients": ingredients,
+                        "direction": direction,
+                        "category_id": category_id,
+                        "user_id": user_id,
+                        "image_url": image
+                    }
                     return {
-                        "message": "Recipe already exists",
-                        "status": "error",
+                        "message": "Recipe updated successfully",
+                        "status": "success",
                         "recipe": self.rec[recipe_id]
                     }
-                self.rec[recipe_id] = {
-                    "id": recipe_id,
-                    "name": name,
-                    "time": time,
-                    "ingredients": ingredients,
-                    "direction": direction,
-                    "category_id": category_id,
-                    "user_id": user_id,
-                    "image_url": image
-                }
                 return {
-                    "message": "Recipe updated successfully",
-                    "status": "success",
-                    "recipe": self.rec[recipe_id]
+                    "message": "Invalid character input",
+                    "status": "error"
                 }
 
             return {

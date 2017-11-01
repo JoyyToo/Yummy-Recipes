@@ -36,7 +36,7 @@ def login():
                 "password": response['user']['password'],
                 "id": response['user']['id']
             }
-            return redirect(url_for('get_categories'))
+            return redirect(url_for('home'))
 
     return render_template('login.html', data=response)
 
@@ -70,7 +70,6 @@ def logout():
 
 
 @app.route('/categories', methods=['GET'])
-@app.route('/categories/', methods=['GET'])
 def get_categories():
     """Get categories"""
     if 'is_logged_in' not in session.keys():

@@ -32,10 +32,16 @@ class TestForUserClass(unittest.TestCase):
         result = self.usr.register_user('user', 'user@gmail.com', 'password', 'pass')
         self.assertEqual({"status": "error", "message": "Passwords do not match"}, result)
 
+    def test_for_reg_password_less_than_6_characters(self):
+        """Test for reg password less than 6 characters"""
+        self.usr.register_user('user', 'user@gmail.com', 'pass', 'pass')
+        result = self.usr.login_user('user@gmail.com', 'mypas')
+        self.assertEqual({"status": "error", "message": "Password must be more than 6 characters"}, result)
+
     def test_for_existing_user(self):
         """Test for existing user"""
-        self.usr.register_user('user', 'user@gmail.com', 'pass', 'pass')
-        result = self.usr.register_user('user', 'user@gmail.com', 'pass', 'pass')
+        self.usr.register_user('user', 'user@gmail.com', 'password', 'password')
+        result = self.usr.register_user('user', 'user@gmail.com', 'password', 'password')
         self.assertEqual({'status': 'error', 'message': 'User already exists'}, result)
 
     # tests for login
@@ -54,10 +60,16 @@ class TestForUserClass(unittest.TestCase):
         result = self.usr.login_user('user@gmail.com', '')
         self.assertEqual({"status": "error", "message": "Please fill in all fields"}, result)
 
+    def test_for_password_less_than_6_field(self):
+        """Test for password les than 6 characters"""
+        self.usr.login_user('user@gmail.com', 'pass')
+        result = self.usr.login_user('user@gmail.com', 'mypas')
+        self.assertEqual({"status": "error", "message": "Password must be more than 6 characters"}, result)
+
     def test_for_wrong_password_(self):
         """Test for wrong password"""
-        self.usr.login_user('user@gmail.com', 'pass')
-        result = self.usr.login_user('user@gmail.com', 'pt')
+        self.usr.login_user('user@gmail.com', 'password')
+        result = self.usr.login_user('user@gmail.com', 'mypassword')
         self.assertEqual({'status': 'error', 'message': 'Invalid login credentials'}, result)
 
     # test for update user

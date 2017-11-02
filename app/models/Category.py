@@ -4,7 +4,7 @@ ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 
 class Category(object):
     """class category"""
-    cat = {}
+    category = {}
     last_id = None
 
     def __init__(self):
@@ -43,7 +43,7 @@ class Category(object):
                     return {
                         "message": "Category created successfully",
                         "status": "success",
-                        "category": self.cat[self.id]
+                        "category": self.category[self.id]
                     }
                 return {
                     "message": "Category exists",
@@ -59,27 +59,27 @@ class Category(object):
             "status": "error"
         }
 
-    def update_category(self, cat_id, name, description, user_id, image_url):
+    def update_category(self, category_id, name, description, user_id, image_url):
         """update category"""
-        cat_id = int(cat_id)
-        if cat_id in self.cat.keys():
+        category_id = int(category_id)
+        if category_id in self.category.keys():
             if name and description and user_id:
                 if name.strip() and description.strip():
-                    image = self.cat[cat_id]["image_url"] if not image_url else image_url.filename
+                    image = self.category[category_id]["image_url"] if not image_url else image_url.filename
                     if image_url and not self.allowed_file(image_url.filename):
                             return {
                                 "message": "File chosen is not allowed",
                                 "status": "error",
-                                "category": self.cat[cat_id]
+                                "category": self.category[category_id]
                             }
-                    if self.validate_update(name, user_id, cat_id):
+                    if self.validate_update(name, user_id, category_id):
                         return {
                             "message": "Category already exists",
                             "status": "error",
-                            "category": self.cat[cat_id]
+                            "category": self.category[category_id]
                         }
-                    self.cat[cat_id] = {
-                        "id": cat_id,
+                    self.category[category_id] = {
+                        "id": category_id,
                         "name": name,
                         "desc": description,
                         "user_id": self.user_id,
@@ -88,28 +88,28 @@ class Category(object):
                     return {
                         "message": "Category updated successfully",
                         "status": "success",
-                        "category": self.cat[cat_id]
+                        "category": self.category[category_id]
                     }
                 return {
                     "message": "Invalid character input",
                     "status": "error",
-                    "category": self.cat[cat_id]
+                    "category": self.category[category_id]
 
                 }
             return {
                 "message": "Fill all the fields",
                 "status": "error",
-                "category": self.cat[cat_id]
+                "category": self.category[category_id]
             }
         return {
             "message": "Category does not exist",
             "status": "error",
         }
 
-    def delete_category(self, cat_id):
+    def delete_category(self, category_id):
         """delete category"""
-        if int(cat_id) in self.cat.keys():
-            del self.cat[int(cat_id)]
+        if int(category_id) in self.category.keys():
+            del self.category[int(category_id)]
             return {
                 "message": "Category deleted successfully",
                 "status": "success"
@@ -122,24 +122,24 @@ class Category(object):
     def all_categories(self, user_id):
         """display all categories"""
         categories = {}
-        if self.cat:
-            for category in self.cat:
-                if self.cat[category]['user_id'] == user_id:
+        if self.category:
+            for category in self.category:
+                if self.category[category]['user_id'] == user_id:
                     categories[category] = {
-                        "id": self.cat[category]['id'],
-                        "name": self.cat[category]['name'],
-                        "desc": self.cat[category]['desc'],
-                        "user_id": self.cat[category]['user_id'],
-                        "image_url": self.cat[category]['image_url'],
+                        "id": self.category[category]['id'],
+                        "name": self.category[category]['name'],
+                        "desc": self.category[category]['desc'],
+                        "user_id": self.category[category]['user_id'],
+                        "image_url": self.category[category]['image_url'],
                     }
             return categories
 
-    def single_category(self, cat_id):
+    def single_category(self, category_id):
         """display single category"""
-        if int(cat_id) in self.cat.keys():
+        if int(category_id) in self.category.keys():
             return {
                 "status": "success",
-                "category": self.cat[int(cat_id)]
+                "category": self.category[int(category_id)]
             }
         return {
             "message": "Category not available",
@@ -148,7 +148,7 @@ class Category(object):
 
     def assign_id(self):
         """assign id"""
-        if len(self.cat) == 0:
+        if len(self.category) == 0:
             _id = 1
             self.last_id = _id
         else:
@@ -158,7 +158,7 @@ class Category(object):
 
     def save(self):
         """save data"""
-        self.cat[self.id] = {
+        self.category[self.id] = {
             "id": self.id,
             "name": self.name,
             "desc": self.description,
@@ -169,7 +169,7 @@ class Category(object):
 
     def check_if_exists(self, id):
         """Check if user exists"""
-        return True if int(id) in self.cat.keys() else False
+        return True if int(id) in self.category.keys() else False
 
     def allowed_file(self, file):
         """check if file is allowed"""
@@ -179,21 +179,21 @@ class Category(object):
     def check_if_name_exists(self, name, user_id):
         """Checking if category exists"""
 
-        for category in self.cat.values():
+        for category in self.category.values():
             if category['name'] == name and category['user_id'] == user_id:
                     return True
         else:
             return False
 
-    def validate_update(self, name, user_id, cat_id):
+    def validate_update(self, name, user_id, category_id):
         """validate update"""
         categories = []
         name = name.strip()
-        for category in self.cat.values():
+        for category in self.category.values():
             if category['name'] == name and category['user_id'] == user_id:
                 categories.append(category)
         if len(categories) == 1:
-            return False if self.cat[cat_id]['name'] == name else True
+            return False if self.category[category_id]['name'] == name else True
         if len(categories) > 1:
             return True
         return False

@@ -8,8 +8,8 @@ from app.models.Category import Category
 from app.models.Recipe import Recipe
 
 user = Users()
-cat = Category()
-rec = Recipe()
+category = Category()
+recipe = Recipe()
 
 
 @app.route('/')
@@ -75,7 +75,7 @@ def get_categories():
     if 'is_logged_in' not in session.keys():
         return redirect(url_for('login'))
     user_id = session['is_logged_in']['id']
-    response = cat.all_categories(user_id) if cat.all_categories(user_id) else None
+    response = category.all_categories(user_id) if category.all_categories(user_id) else None
     return render_template('allcategories.html', data=response)
 
 
@@ -90,7 +90,7 @@ def add_category():
         description = request.form['description']
         user_id = session['is_logged_in']['id']
         image = request.files['file']
-        response = cat.create_category(name, description, user_id, image)
+        response = category.create_category(name, description, user_id, image)
         if response['status'] == 'success':
             filename = secure_filename(image.filename)
             image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
@@ -98,17 +98,17 @@ def add_category():
     return render_template('addcat.html', data=response)
 
 
-@app.route('/categories/<cat_id>', methods=['GET'])
-def get_category(cat_id):
+@app.route('/categories/<category_id>', methods=['GET'])
+def get_category(category_id):
     """Get single category"""
-    response = cat.single_category(cat_id)
+    response = category.single_category(category_id)
     return render_template('singlecategory.html', data=response)
 
 
-@app.route('/delcategory/<cat_id>', methods=['GET'])
-def del_category(cat_id):
+@app.route('/delcategory/<category_id>', methods=['GET'])
+def del_category(category_id):
     """Delete category"""
-    response = cat.delete_category(cat_id) if cat.delete_category(cat_id) else None
+    response = category.delete_category(category_id) if category.delete_category(category_id) else None
     return redirect(url_for('get_categories'))
 
 
@@ -117,9 +117,9 @@ def update_category(_id):
     """Update category"""
     if 'is_logged_in' not in session.keys():
         return redirect(url_for('login'))
-    response = cat.single_category(_id)
+    response = category.single_category(_id)
     if request.method == "POST":
-        cat_id = _id
+        category_id = _id
         name = request.form['name']
         description = request.form['description']
         user_id = session['is_logged_in']['id']
@@ -127,7 +127,7 @@ def update_category(_id):
         if request.files['file']:
             image = request.files['file']
 
-        response = cat.update_category(cat_id, name, description, user_id, image)
+        response = category.update_category(category_id, name, description, user_id, image)
         if response['status'] == 'success':
             if image:
                 filename = secure_filename(image.filename)
@@ -152,8 +152,8 @@ def addrecipe(_id):
         user_id = session['is_logged_in']['id']
         image = request.files['file']
 
-        response = rec.create_recipe(name, time, ingredients, direction,
-                                     category_id, user_id, image)
+        response = recipe.create_recipe(name, time, ingredients, direction,
+                                        category_id, user_id, image)
         if response['status'] == 'success':
             filename = secure_filename(image.filename)
             image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
@@ -165,23 +165,23 @@ def addrecipe(_id):
 @app.route('/category/<_id>/recipes', methods=['GET'])
 def recipes(_id):
     """Available recipes"""
-    cat_id = _id
-    if not cat.check_if_exists(cat_id):
+    category_id = _id
+    if not category.check_if_exists(category_id):
         return redirect(url_for('add_category'))
     if 'is_logged_in' not in session.keys():
         return redirect(url_for('login'))
     user_id = session['is_logged_in']['id']
-    response = rec.view_recipes(user_id)
+    response = recipe.view_recipes(user_id, category_id)
 
     return render_template('recipes.html', data={
-        "cat_id": cat_id,
+        "category_id": category_id,
         "response": response})
 
 
 @app.route('/category/<_id>/delrecipe/<recipe_id>', methods=['GET'])
 def del_recipe(_id, recipe_id):
     """Delete recipe"""
-    response = rec.delete_recipe(recipe_id) if rec.delete_recipe(recipe_id) else None
+    response = recipe.delete_recipe(recipe_id) if recipe.delete_recipe(recipe_id) else None
     return redirect(url_for('recipes', _id=_id))
 
 
@@ -190,7 +190,7 @@ def update_recipe(_id, recipe_id):
     """Update recipe"""
     if 'is_logged_in' not in session.keys():
         return redirect(url_for('login'))
-    response = rec.single_recipe(recipe_id)
+    response = recipe.single_recipe(recipe_id)
     if request.method == 'POST':
         name = request.form['name']
         time = request.form['time']
@@ -202,8 +202,8 @@ def update_recipe(_id, recipe_id):
         if request.files['file']:
             image = request.files['file']
 
-        response = rec.update_recipe(recipe_id, name, time, ingredients,
-                                     direction, category_id, user_id, image)
+        response = recipe.update_recipe(recipe_id, name, time, ingredients,
+                                        direction, category_id, user_id, image)
         if response['status'] == 'success':
             if image:
                 filename = secure_filename(image.filename)

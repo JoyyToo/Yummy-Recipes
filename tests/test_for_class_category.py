@@ -18,7 +18,7 @@ class TestForClassCategory(unittest.TestCase):
         image = os.path.dirname(os.path.realpath(__file__)) + "/test.jpg"
         img = Image.open(image)
         response = self.category.create_category(' ', ' ', ' ', img)
-        self.assertEqual({'message': 'Invalid character input', 'status': 'error'}, response)
+        self.assertEqual({'message': 'Input cannot be empty', 'status': 'error'}, response)
 
     def test_for_adding_existing_category(self):
         image = os.path.dirname(os.path.realpath(__file__)) + "/test.jpg"
@@ -54,7 +54,7 @@ class TestForClassCategory(unittest.TestCase):
         img = Image.open(image)
         self.category.create_category('name', 'desc', 'user_id', img)
         response = self.category.update_category(1, ' ', ' ', ' ', img)
-        self.assertEqual('Invalid character input', response['message'])
+        self.assertEqual('Input cannot be empty', response['message'])
 
     def test_delete_category(self):
         image = os.path.dirname(os.path.realpath(__file__)) + "/test.jpg"

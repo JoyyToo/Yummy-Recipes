@@ -13,32 +13,12 @@ class TestForClassCategory(unittest.TestCase):
         self.category = Category()
         self.category.category = {}
 
-    def test_for_successfull_add_category(self):
-        """Tests for successfull creation of a category"""
-        image = os.path.dirname(os.path.realpath(__file__)) + "/test.jpg"
-        img = Image.open(image)
-        response = self.category.create_category('name', 'desc', 'user_id', img)
-        self.assertEqual({'message': 'Category created successfully', 'status': 'success',
-                          'category': {'id': 1, 'name': 'name', 'desc': 'desc', 'user_id': 'user_id',
-                                       'image_url': '/home/joytoo/Desktop/Yummy-Recipes/tests/test.jpg'}}
-                         , response)
-
     def test_for_add_category_with_invalid_characters(self):
         """Tests for successfull creation of a category"""
         image = os.path.dirname(os.path.realpath(__file__)) + "/test.jpg"
         img = Image.open(image)
         response = self.category.create_category(' ', ' ', ' ', img)
         self.assertEqual({'message': 'Invalid character input', 'status': 'error'}, response)
-
-    def test_for_correct_last_id(self):
-        image = os.path.dirname(os.path.realpath(__file__)) + "/test.jpg"
-        img = Image.open(image)
-        response = self.category.create_category('name', 'desc', 'user_id', img)
-        self.assertEqual({'message': 'Category created successfully', 'status': 'success',
-                          'category': {'id': 1, 'name': 'name', 'desc': 'desc', 'user_id': 'user_id',
-                                       'image_url': '/home/joytoo/Desktop/Yummy-Recipes/tests/test.jpg'}}
-                         , response)
-        self.assertEqual(self.category.last_id, 1)
 
     def test_for_adding_existing_category(self):
         image = os.path.dirname(os.path.realpath(__file__)) + "/test.jpg"

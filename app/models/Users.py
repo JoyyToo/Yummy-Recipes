@@ -1,8 +1,9 @@
 """Class Users"""
+import re
 
 
 class Users(object):
-
+    """Users class"""
     users = {}
     last_id = None
 
@@ -12,13 +13,20 @@ class Users(object):
         self.email = None
         self.password = None
         self.password_again = None
-        self.id = None
+        self._id = None
 
     def register_user(self, username, email, password, password_again):
         """Register user"""
         if username and email and password and password_again:
 
             if username.strip() and email.strip() and password.strip() and password_again.strip():
+
+                if not self.valid_email(email):
+                    return {
+                        "message": "Invalid Email address",
+                        "status": "error"
+                    }
+
                 if password == password_again:
                     if len(password) < 6:
                         return {
@@ -29,19 +37,19 @@ class Users(object):
                     self.email = email
                     self.password = password
                     self.password_again = password_again
-                    self.id = self.assign_id()
+                    self._id = self.assign_id()
 
                     if self.check_if_user_exists(email):
                         return {
-                            "message": "User already exists",
+                            "message": "User already exists. Please login",
                             "status": "error"
                         }
 
                     if self.save():
                         return {
-                            "message": "User created successfully",
+                            "message": "You have registered successfully. Please login",
                             "status": "success",
-                            "user": self.users[self.id]
+                            "user": self.users[self._id]
                         }
 
                 return {
@@ -49,7 +57,7 @@ class Users(object):
                     'status': 'error'
                 }
             return {
-                "message": "Invalid character input",
+                "message": "Input cannot be empty",
                 "status": "error"
             }
 
@@ -62,6 +70,13 @@ class Users(object):
     def login_user(self, email, password):
         """Login User"""
         if email and password:
+
+            if not self.valid_email(email):
+                return {
+                    "message": "Invalid Email address",
+                    "status": "error"
+                }
+
             if len(password) < 6:
                 return {
                     "message": "Password must be more than 6 characters",
@@ -70,16 +85,14 @@ class Users(object):
             if self.check_if_user_exists(email):
                 if self.users[self.check_if_user_exists(email)]['password'] == password:
                     return {
-                        "message": "Login successful",
+                        "message": "You logged in successfully",
                         "status": "success",
                         "user": self.users[self.check_if_user_exists(email)]
                     }
-
             return {
-                "message": "Invalid login credentials",
+                "message": "Invalid password or email address",
                 "status": "error"
             }
-
         return {
             'message': 'Please fill in all fields',
             'status': 'error'
@@ -136,8 +149,8 @@ class Users(object):
 
     def save(self):
         """save date"""
-        self.users[self.id] = {
-            "id": self.id,
+        self.users[self._id] = {
+            "id": self._id,
             "username": self.username,
             "password": self.password,
             "password_again": self.password_again,
@@ -152,3 +165,7 @@ class Users(object):
                 return user['id']
         else:
             return False
+
+    def valid_email(self, email):
+        return bool(re.search(r"^[\w\.\+\-]+\@[\w]+\.[a-z]{2,3}$", email))
+

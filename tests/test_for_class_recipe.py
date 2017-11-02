@@ -85,7 +85,7 @@ class TestForClassRecipe(unittest.TestCase):
         image = os.path.dirname(os.path.realpath(__file__)) + "/test.jpg"
         img = Image.open(image)
         result = self.recipe.create_recipe(' ', ' ', ' ', ' ', 1, 1, img)
-        self.assertEqual({"message": "Invalid character input", "status": "error"}, result)
+        self.assertEqual({'status': 'error', 'message': 'Input cannot be empty'}, result)
 
     def test_adding_recipe_having_same_name_as_an_existing_recipe(self):
         """Test for adding recipe with existing name"""

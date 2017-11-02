@@ -42,7 +42,7 @@ class TestForUserClass(unittest.TestCase):
         """Test for existing user"""
         self.usr.register_user('user', 'user@gmail.com', 'password', 'password')
         result = self.usr.register_user('user', 'user@gmail.com', 'password', 'password')
-        self.assertEqual({'status': 'error', 'message': 'User already exists'}, result)
+        self.assertEqual({'message': 'User already exists. Please login', 'status': 'error'}, result)
 
     # tests for login
     def test_for_empty_login_fields(self):
@@ -70,7 +70,7 @@ class TestForUserClass(unittest.TestCase):
         """Test for wrong password"""
         self.usr.login_user('user@gmail.com', 'password')
         result = self.usr.login_user('user@gmail.com', 'mypassword')
-        self.assertEqual({'status': 'error', 'message': 'Invalid login credentials'}, result)
+        self.assertEqual({'status': 'error', 'message': 'Invalid password or email address'}, result)
 
     # test for update user
     def test_for_update_non_existing_user(self):

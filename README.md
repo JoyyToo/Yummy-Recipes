@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/JoyyToo/Yummy-Recipes.svg?branch=ft-app)](https://travis-ci.org/JoyyToo/Yummy-Recipes) [![Coverage Status](https://coveralls.io/repos/github/JoyyToo/Yummy-Recipes/badge.svg?branch=master)](https://coveralls.io/github/JoyyToo/Yummy-Recipes?branch=master)[License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Build Status](https://travis-ci.org/JoyyToo/Yummy-Recipes.svg?branch=ft-app)](https://travis-ci.org/JoyyToo/Yummy-Recipes) [![Coverage Status](https://coveralls.io/repos/github/JoyyToo/Yummy-Recipes/badge.svg?branch=master)](https://coveralls.io/github/JoyyToo/Yummy-Recipes?branch=master) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 It contains:
  - Designs

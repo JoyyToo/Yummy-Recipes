@@ -1,3 +1,4 @@
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/ff888f8eac8345b5a9038426071f00b9)](https://www.codacy.com/app/JoyyToo/Yummy-Recipes?utm_source=github.com&utm_medium=referral&utm_content=JoyyToo/Yummy-Recipes&utm_campaign=badger)
 [![Build Status](https://travis-ci.org/JoyyToo/Yummy-Recipes.svg?branch=ft-app)](https://travis-ci.org/JoyyToo/Yummy-Recipes) [![Coverage Status](https://coveralls.io/repos/github/JoyyToo/Yummy-Recipes/badge.svg?branch=master)](https://coveralls.io/github/JoyyToo/Yummy-Recipes?branch=master)
 
 It contains:

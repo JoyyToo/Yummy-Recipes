@@ -8,7 +8,7 @@ class Recipe(object):
     last_id = None
 
     def __init__(self):
-        self.id = None
+        self._id = None
         self.name = None
         self.time = None
         self.ingredients = None
@@ -27,7 +27,7 @@ class Recipe(object):
                 self.direction = direction
                 self.category_id = category_id
                 self.user_id = user_id
-                self.id = self.assign_id()
+                self._id = self.assign_id()
                 self.image_url = image_url
 
                 if not image_url:
@@ -49,10 +49,10 @@ class Recipe(object):
                     return {
                         "message": "Recipe added successfully",
                         "status": "success",
-                        "recipe": self.allrecipes[self.id]
+                        "recipe": self.allrecipes[self._id]
                     }
             return {
-                "message": "Invalid character input",
+                "message": "Input cannot be empty",
                 "status": "error"
             }
         return {
@@ -65,16 +65,19 @@ class Recipe(object):
         """update recipe"""
         recipe_id = int(recipe_id)
         if int(recipe_id) in self.allrecipes.keys():
-            if recipe_id and name and time and ingredients and direction and category_id and user_id:
-                if name.strip() and time.strip() and ingredients.strip() and direction.strip():
+            if recipe_id and name and time and ingredients \
+                    and direction and category_id and user_id:
+                if name.strip() and time.strip() and ingredients.strip()\
+                        and direction.strip():
 
-                    image = self.allrecipes[recipe_id]["image_url"] if not image_url else image_url.filename
+                    image = self.allrecipes[recipe_id]["image_url"] \
+                        if not image_url else image_url.filename
                     if image_url and not self.allowed_file(image_url.filename):
-                            return {
-                                "message": "File chosen is not allowed",
-                                "status": "error",
-                                "recipe": self.allrecipes[recipe_id]
-                            }
+                                return {
+                                    "message": "File chosen is not allowed",
+                                    "status": "error",
+                                    "recipe": self.allrecipes[recipe_id]
+                                }
                     if self.validate_update(name, user_id, recipe_id, category_id):
                         return {
                             "message": "Recipe already exists",
@@ -97,7 +100,7 @@ class Recipe(object):
                         "recipe": self.allrecipes[recipe_id]
                     }
                 return {
-                    "message": "Invalid character input",
+                    "message": "Input cannot be empty",
                     "status": "error"
                 }
 
@@ -144,7 +147,8 @@ class Recipe(object):
         if self.allrecipes:
 
             for recipe in self.allrecipes:
-                if self.allrecipes[recipe]['user_id'] == user_id and self.allrecipes[recipe]['category_id'] == category_id:
+                if self.allrecipes[recipe]['user_id'] == user_id \
+                        and self.allrecipes[recipe]['category_id'] == category_id:
                     recipes[recipe] = {
                         "id": self.allrecipes[recipe]['id'],
                         "name": self.allrecipes[recipe]['name'],
@@ -160,8 +164,8 @@ class Recipe(object):
 
     def save(self):
         """save data"""
-        self.allrecipes[self.id] = {
-            "id": self.id,
+        self.allrecipes[self._id] = {
+            "id": self._id,
             "name": self.name,
             "time": self.time,
             "ingredients": self.ingredients,
@@ -190,10 +194,10 @@ class Recipe(object):
 
     def check_if_name_exists(self, name, user_id, category_id):
         """Checking if recipe exists"""
-
         for recipe in self.allrecipes.values():
-            if recipe['name'] == name and recipe['user_id'] == user_id and recipe['category_id'] == category_id:
-                    return True
+            if recipe['name'] == name and recipe['user_id'] == user_id \
+                    and recipe['category_id'] == category_id:
+                return True
         else:
             return False
 
@@ -202,7 +206,8 @@ class Recipe(object):
         recipes = []
         name = name.strip()
         for recipe in self.allrecipes.values():
-            if recipe['name'] == name and recipe['user_id'] == user_id and recipe['category_id'] == category_id:
+            if recipe['name'] == name and recipe['user_id'] == user_id \
+                    and recipe['category_id'] == category_id:
                 recipes.append(recipe)
         if len(recipes) == 1:
             return False if self.allrecipes[recipe_id]['name'] == name else True

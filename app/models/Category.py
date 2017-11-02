@@ -50,7 +50,7 @@ class Category(object):
                     "status": "error"
                 }
             return {
-                "message": "Invalid character input",
+                "message": "Input cannot be empty",
                 "status": "error"
             }
 
@@ -92,7 +92,7 @@ class Category(object):
                         "category": self.category[category_id]
                     }
                 return {
-                    "message": "Invalid character input",
+                    "message": "Input cannot be empty",
                     "status": "error",
                     "category": self.category[category_id]
 

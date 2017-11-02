@@ -9,7 +9,7 @@ class Category(object):
 
     def __init__(self):
         """initialization"""
-        self.id = None
+        self._id = None
         self.name = None
         self.description = None
         self.user_id = None
@@ -21,7 +21,7 @@ class Category(object):
             if name.strip() and description.strip():
                 self.name = name
                 self.description = description
-                self.id = self.assign_id()
+                self._id = self.assign_id()
                 self.user_id = user_id
                 self.image_url = image_url
                 if not image_url:
@@ -43,7 +43,7 @@ class Category(object):
                     return {
                         "message": "Category created successfully",
                         "status": "success",
-                        "category": self.category[self.id]
+                        "category": self.category[self._id]
                     }
                 return {
                     "message": "Category exists",
@@ -65,13 +65,14 @@ class Category(object):
         if category_id in self.category.keys():
             if name and description and user_id:
                 if name.strip() and description.strip():
-                    image = self.category[category_id]["image_url"] if not image_url else image_url.filename
+                    image = self.category[category_id]["image_url"] if not image_url \
+                        else image_url.filename
                     if image_url and not self.allowed_file(image_url.filename):
-                            return {
-                                "message": "File chosen is not allowed",
-                                "status": "error",
-                                "category": self.category[category_id]
-                            }
+                        return {
+                            "message": "File chosen is not allowed",
+                            "status": "error",
+                            "category": self.category[category_id]
+                        }
                     if self.validate_update(name, user_id, category_id):
                         return {
                             "message": "Category already exists",
@@ -158,8 +159,8 @@ class Category(object):
 
     def save(self):
         """save data"""
-        self.category[self.id] = {
-            "id": self.id,
+        self.category[self._id] = {
+            "id": self._id,
             "name": self.name,
             "desc": self.description,
             "user_id": self.user_id,
@@ -167,9 +168,9 @@ class Category(object):
         }
         return True
 
-    def check_if_exists(self, id):
+    def check_if_exists(self, _id):
         """Check if user exists"""
-        return True if int(id) in self.category.keys() else False
+        return True if int(_id) in self.category.keys() else False
 
     def allowed_file(self, file):
         """check if file is allowed"""
@@ -181,7 +182,7 @@ class Category(object):
 
         for category in self.category.values():
             if category['name'] == name and category['user_id'] == user_id:
-                    return True
+                return True
         else:
             return False
 

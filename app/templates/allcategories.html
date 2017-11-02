@@ -57,28 +57,28 @@
             <div>
 
                 <p class="center login-form-text">My Categories</p>
-                {% for cat in data %}
-                {%if session['is_logged_in']['id'] == data[cat]['user_id']%}
+                {% for category in data %}
+                {%if session['is_logged_in']['id'] == data[category]['user_id']%}
                 <div style="float: left; margin: 5px">
                     <div class="row margin center"
                          style="background: ghostwhite; height: 400px; width: 270px;border-style: solid">
                         <div class="input-field col s12">
-                            <center><img src="{{ url_for('static', filename='uploaded_images/'+data[cat]['image_url'])}}"
+                            <center><img src="{{ url_for('static', filename='uploaded_images/'+data[category]['image_url'])}}"
                                          height="124" width="124"
                                          class="hero-link__item__image">&nbsp &nbsp
                             </center>
 
                             <h2><a class="btn waves-effect waves-light col s12"
-                                   href="{{ url_for('recipes', _id=data[cat]['id']) }}"
-                                   class="waves-effect waves-light col s12">{{ data[cat]['name'] }}</a></h2>
+                                   href="{{ url_for('recipes', _id=data[category]['id']) }}"
+                                   class="waves-effect waves-light col s12">{{ data[category]['name'] }}</a></h2>
 
-                            <p class="waves-effect waves-light col s12">{{ data[cat]['desc'] }} </p>
+                            <p class="waves-effect waves-light col s12">{{ data[category]['desc'] }} </p>
 
-                            <a href="{{ url_for('update_category', _id=data[cat]['id']) }}"
+                            <a href="{{ url_for('update_category', _id=data[category]['id']) }}"
                                class="btn-floating btn-large waves-effect waves-light blue"><i
                                     class="material-icons"><img
                                     src="{{ url_for('static', filename='img/edit.png')}}"></i></a>&nbsp &nbsp
-                            <a href="{{ url_for('del_category', cat_id=data[cat]['id']) }}"
+                            <a href="{{ url_for('del_category', category_id=data[category]['id']) }}"
                                class="btn-floating btn-large waves-effect waves-light red"><i
                                     class="material-icons"><img
                                     src="{{ url_for('static', filename='img/delete.png') }}"></i></a>

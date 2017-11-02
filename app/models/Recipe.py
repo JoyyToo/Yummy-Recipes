@@ -75,7 +75,7 @@ class Recipe(object):
                                 "status": "error",
                                 "recipe": self.allrecipes[recipe_id]
                             }
-                    if self.validate_update(name, user_id, recipe_id):
+                    if self.validate_update(name, user_id, recipe_id, category_id):
                         return {
                             "message": "Recipe already exists",
                             "status": "error",
@@ -192,17 +192,17 @@ class Recipe(object):
         """Checking if recipe exists"""
 
         for recipe in self.allrecipes.values():
-            if recipe['name'] == name and recipe['user_id'] == user_id and recipe['category_id'] == int(category_id):
+            if recipe['name'] == name and recipe['user_id'] == user_id and recipe['category_id'] == category_id:
                     return True
         else:
             return False
 
-    def validate_update(self, name, user_id, recipe_id):
+    def validate_update(self, name, user_id, recipe_id, category_id):
         """validate update function"""
         recipes = []
         name = name.strip()
         for recipe in self.allrecipes.values():
-            if recipe['name'] == name and recipe['user_id'] == user_id:
+            if recipe['name'] == name and recipe['user_id'] == user_id and recipe['category_id'] == category_id:
                 recipes.append(recipe)
         if len(recipes) == 1:
             return False if self.allrecipes[recipe_id]['name'] == name else True

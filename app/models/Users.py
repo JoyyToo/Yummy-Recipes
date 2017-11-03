@@ -1,5 +1,6 @@
 """Class Users"""
 import re
+INVALID_CHAR = re.compile(r"[<>/{}[\]~`*!@#$%^&()=+]")
 
 
 class Users(object):
@@ -20,6 +21,12 @@ class Users(object):
         if username and email and password and password_again:
 
             if username.strip() and email.strip() and password.strip() and password_again.strip():
+
+                if INVALID_CHAR.search(username):
+                    return {
+                        "message": "Username contains invalid characters",
+                        "status": "error"
+                    }
 
                 if not self.valid_email(email):
                     return {

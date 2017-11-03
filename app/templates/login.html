@@ -25,7 +25,11 @@
 
 <body>
 {% if data %}
-<div class="alert alert-danger alert-dismissable">
+    {% if data['status'] == "success" %}
+        <div class="alert alert-success alert-dismissable">
+    {% else %}
+        <div class="alert alert-danger alert-dismissable">
+    {% endif %}
     <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
     <strong>{{ data['message'] }}</strong>
 </div>
@@ -58,8 +62,7 @@
             <div class="row margin">
                 <div class="input-field col s12">
                     <i class="mdi-communication-email prefix"></i>
-                    <input class="validate" id="email" name="email" type="email"
-                           pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+                    <input class="validate" id="email" name="email" type="text">
                     <label for="email" class="center-align">Email</label>
                 </div>
             </div>
@@ -77,12 +80,11 @@
             </div>
             <div class="row">
                 <div class="input-field col s6 m6 l6">
-                    <p class="margin medium-small">Don't have an account?<a href="{{url_for('register')}}">Register
+                    <p class="margin medium-small">Don't have an account?
+                        &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;
+                        &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;
+                        <a href="{{url_for('register')}}">Register
                         Now!</a></p>
-                </div>
-                <div class="input-field col s6 m6 l6">
-                    <p class="margin right-align medium-small"><a href="forgot-password.html">Forgot password?</a></p>
-                </div>
             </div>
 
         </form>

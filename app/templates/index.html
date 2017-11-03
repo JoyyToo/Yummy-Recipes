@@ -44,7 +44,9 @@
         </button>
 
     </div>
+    {%if 'is_logged_in' in session.keys()%}
     <a class="navbar-brand" style="color:white;" href="{{ url_for('logout') }}">Logout</a>
+    {% endif %}
 </nav>
 
 <!-- Header -->

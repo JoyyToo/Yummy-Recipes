@@ -1,5 +1,8 @@
 """Recipe class"""
+import re
+
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
+INVALID_CHAR = re.compile(r"[<>/{}[\]~`*!@#$%^&()=+]")
 
 
 class Recipe(object):
@@ -21,6 +24,12 @@ class Recipe(object):
         """create recipe"""
         if name and time and ingredients and direction and category_id and user_id:
             if name.strip() and time.strip() and ingredients.strip() and direction.strip():
+                if self.validate_input(name=name, time=time, ingredients=ingredients, direction=direction):
+                    return {
+                        "message": "{} contains invalid characters".format(
+                            self.validate_input(name=name, time=time, ingredients=ingredients, direction=direction)),
+                        "status": "error"
+                    }
                 self.name = name
                 self.time = time
                 self.ingredients = ingredients
@@ -69,6 +78,15 @@ class Recipe(object):
                     and direction and category_id and user_id:
                 if name.strip() and time.strip() and ingredients.strip()\
                         and direction.strip():
+                    if self.validate_input(
+                            name=name, time=time, ingredients=ingredients, direction=direction):
+                        return {
+                            "message": "{} contains invalid characters".format(
+                                self.validate_input(name=name, time=time, ingredients=ingredients,
+                                                    direction=direction)),
+                            "status": "error",
+                            "recipe": self.allrecipes[recipe_id]
+                        }
 
                     image = self.allrecipes[recipe_id]["image_url"] \
                         if not image_url else image_url.filename
@@ -214,3 +232,10 @@ class Recipe(object):
         if len(recipes) > 1:
             return True
         return False
+
+    def validate_input(self, **kwargs):
+        if kwargs:
+            for key in kwargs:
+                if INVALID_CHAR.search(kwargs[key]):
+                    return key
+

@@ -1,5 +1,8 @@
 """Category class"""
+import re
+
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
+INVALID_CHAR = re.compile(r"[<>/{}[\]~`*!@#$%^&()=+]")
 
 
 class Category(object):
@@ -19,6 +22,12 @@ class Category(object):
         """create category"""
         if name and description and user_id:
             if name.strip() and description.strip():
+                if self.validate_input(name=name, description=description):
+                    return {
+                        "message": "{} contains invalid characters".format(
+                            self.validate_input(name=name, description=description)),
+                        "status": "error"
+                    }
                 self.name = name
                 self.description = description
                 self._id = self.assign_id()
@@ -65,6 +74,13 @@ class Category(object):
         if category_id in self.category.keys():
             if name and description and user_id:
                 if name.strip() and description.strip():
+                    if self.validate_input(name=name, description=description):
+                        return {
+                            "message": "{} contains invalid characters".format(
+                                self.validate_input(name=name, description=description)),
+                            "status": "error",
+                            "category": self.category[category_id]
+                        }
                     image = self.category[category_id]["image_url"] if not image_url \
                         else image_url.filename
                     if image_url and not self.allowed_file(image_url.filename):
@@ -198,3 +214,9 @@ class Category(object):
         if len(categories) > 1:
             return True
         return False
+
+    def validate_input(self, **kwargs):
+        if kwargs:
+            for key in kwargs:
+                if INVALID_CHAR.search(kwargs[key]):
+                    return key

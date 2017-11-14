@@ -174,5 +174,5 @@ class Users(object):
             return False
 
     def valid_email(self, email):
-        return bool(re.search(r"^[\w\.\+\-]+\@[\w]+\.[a-z]{2,3}$", email))
+        return bool(re.search(r"^[\wg\.\+\-]+\@[\w]+\.[a-z]{2,3}$", email))
 

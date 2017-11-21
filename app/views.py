@@ -90,11 +90,14 @@ def add_category():
         name = request.form['name']
         description = request.form['description']
         user_id = session['is_logged_in']['id']
-        image = request.files['file']
+        image = ''
+        if request.files['file']:
+            image = request.files['file']
         response = CATEGORY.create_category(name, description, user_id, image)
         if response['status'] == 'success':
-            filename = secure_filename(image.filename)
-            image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            if image:
+                filename = secure_filename(image.filename)
+                image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             return redirect(url_for('get_categories'))
     return render_template('addcat.html', data=response)
 
@@ -151,13 +154,16 @@ def addrecipe(_id):
         direction = request.form['direction']
         category_id = _id
         user_id = session['is_logged_in']['id']
-        image = request.files['file']
+        image = ''
+        if request.files['file']:
+            image = request.files['file']
 
         response = RECIPE.create_recipe(name, time, ingredients, direction,
                                         category_id, user_id, image)
         if response['status'] == 'success':
-            filename = secure_filename(image.filename)
-            image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            if image:
+                filename = secure_filename(image.filename)
+                image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             return redirect(url_for('recipes', _id=_id))
 
     return render_template('addrecipe.html', data=response)

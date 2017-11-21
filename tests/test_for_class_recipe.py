@@ -39,11 +39,6 @@ class TestForClassRecipe(unittest.TestCase):
         result = self.recipe.create_recipe('biryani', '1 hour', '1 tbsp', '', 1, 2, 'file.png')
         self.assertEqual({"status": "error", "message": 'Fill all fields'}, result)
 
-    def test_for_empty_image_url_field(self):
-        """Test for empty image url field"""
-        result = self.recipe.create_recipe('biryani', '1 hour', ' 1 tbsp ', 'stir', 1, 2, '')
-        self.assertEqual({"status": "error", "message": 'No file chosen'}, result)
-
     # tests for update recipe function
     def test_for_update_non_existing_recipe(self):
         """Test for update missing recipe"""

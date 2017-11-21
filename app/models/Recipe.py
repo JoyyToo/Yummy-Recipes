@@ -39,12 +39,8 @@ class Recipe(object):
                 self._id = self.assign_id()
                 self.image_url = image_url
 
-                if not image_url:
-                    return {
-                        "message": "No file chosen",
-                        "status": "error"
-                    }
-                if not self.allowed_file(image_url.filename):
+                image = None if not image_url else image_url.filename
+                if image_url and not self.allowed_file(image_url.filename):
                     return {
                         "message": "File chosen is not allowed",
                         "status": "error"
@@ -54,12 +50,21 @@ class Recipe(object):
                         "message": "Recipe already exists",
                         "status": "error"
                     }
-                if self.save():
-                    return {
-                        "message": "Recipe added successfully",
-                        "status": "success",
-                        "recipe": self.allrecipes[self._id]
-                    }
+                self.allrecipes[self._id] = {
+                    "id": self._id,
+                    "name": self.name,
+                    "time": self.time,
+                    "ingredients": self.ingredients,
+                    "direction": self.direction,
+                    "category_id": self.category_id,
+                    "user_id": self.user_id,
+                    "image_url": image
+                }
+                return {
+                    "message": "Recipe added successfully",
+                    "status": "success",
+                    "recipe": self.allrecipes[self._id]
+                }
             return {
                 "message": "Input cannot be empty",
                 "status": "error"
@@ -179,20 +184,6 @@ class Recipe(object):
                     }
             return recipes
         return self.allrecipes
-
-    def save(self):
-        """save data"""
-        self.allrecipes[self._id] = {
-            "id": self._id,
-            "name": self.name,
-            "time": self.time,
-            "ingredients": self.ingredients,
-            "direction": self.direction,
-            "category_id": self.category_id,
-            "user_id": self.user_id,
-            "image_url": self.image_url.filename
-        }
-        return True
 
     def assign_id(self):
         """assign id"""

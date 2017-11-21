@@ -112,11 +112,6 @@ class TestForClassCategory(unittest.TestCase):
         result = self.category.create_category('dessert', '', 1, 'file.png')
         self.assertEqual({"status": "error", "message": "Fill all the fields"}, result)
 
-    def test_for_empty_image_url_field(self):
-        """Test for empty image url field"""
-        result = self.category.create_category('dessert', 'after dinner', 1, '')
-        self.assertEqual({"status": "error", "message": 'No file chosen'}, result)
-
     def test_for_non_existing_category(self):
         """Test for non-existing category"""
         self.category.single_category(1)

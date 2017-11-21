@@ -56,28 +56,32 @@
             <div class="row margin">
                 <div class="input-field col s12">
                     <i class="mdi-social-person-outline prefix"></i>
-                    <input id="username" name="username" type="text" class="validate" >
+                    <input id="username" name="username" type="text"
+                           value="{{ request.form['username'] }}" class="validate" >
                     <label for="username" class="center-align">Username</label>
                 </div>
             </div>
             <div class="row margin">
                 <div class="input-field col s12">
                     <i class="mdi-communication-email prefix"></i>
-                    <input id="email" type="text" name="email" class="validate" >
+                    <input id="email" type="text" name="email"
+                           value="{{ request.form['email'] }}" class="validate" >
                     <label for="email" class="center-align">Email</label>
                 </div>
             </div>
             <div class="row margin">
                 <div class="input-field col s12">
                     <i class="mdi-action-lock-outline prefix"></i>
-                    <input id="password" type="password" name="password" class="validate" >
+                    <input id="password" type="password" name="password"
+                           value="{{ request.form['password'] }}" class="validate" >
                     <label for="password">Password</label>
                 </div>
             </div>
             <div class="row margin">
                 <div class="input-field col s12">
                     <i class="mdi-action-lock-outline prefix"></i>
-                    <input id="password-again" name="password-again" type="password" >
+                    <input id="password-again" name="password-again"
+                           value="{{ request.form['password-again'] }}" type="password" >
                     <label for="password-again">Re-type password</label>
                 </div>
             </div>

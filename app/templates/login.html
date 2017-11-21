@@ -62,14 +62,16 @@
             <div class="row margin">
                 <div class="input-field col s12">
                     <i class="mdi-communication-email prefix"></i>
-                    <input class="validate" id="email" name="email" type="text">
+                    <input class="validate" id="email" name="email"
+                           value="{{ request.form['email'] }}" type="text">
                     <label for="email" class="center-align">Email</label>
                 </div>
             </div>
             <div class="row margin">
                 <div class="input-field col s12">
                     <i class="mdi-action-lock-outline prefix"></i>
-                    <input id="password" name="password" type="password">
+                    <input id="password" name="password"
+                           value="{{ request.form['password'] }}" type="password">
                     <label for="password">Password</label>
                 </div>
             </div>

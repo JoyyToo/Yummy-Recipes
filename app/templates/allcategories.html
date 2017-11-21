@@ -61,12 +61,19 @@
                 {%if session['is_logged_in']['id'] == data[category]['user_id']%}
                 <div style="float: left; margin: 5px">
                     <div class="row margin center"
-                         style="background: ghostwhite; height: 400px; width: 270px;border-style: solid">
-                        <div class="input-field col s12">
+                         style="background: ghostwhite; height: 400px; width: 250px;border-style: solid">
+                        <div class="input-field col s15">
+                            {%if data[category]['image_url']%}
                             <center><img src="{{ url_for('static', filename='uploaded_images/'+data[category]['image_url'])}}"
                                          height="124" width="124"
                                          class="hero-link__item__image">&nbsp &nbsp
                             </center>
+                            {% else %}
+                            <center><img src=""
+                                         height="124" width="124"
+                                         class="hero-link__item__image">&nbsp &nbsp
+                            </center>
+                            {% endif %}
 
                             <h2><a class="btn waves-effect waves-light col s12"
                                    href="{{ url_for('recipes', _id=data[category]['id']) }}"
@@ -78,10 +85,13 @@
                                class="btn-floating btn-large waves-effect waves-light blue"><i
                                     class="material-icons"><img
                                     src="{{ url_for('static', filename='img/edit.png')}}"></i></a>&nbsp &nbsp
+
                             <a href="{{ url_for('del_category', category_id=data[category]['id']) }}"
-                               class="btn-floating btn-large waves-effect waves-light red"><i
-                                    class="material-icons"><img
-                                    src="{{ url_for('static', filename='img/delete.png') }}"></i></a>
+
+                                class="btn-floating btn-large waves-effect waves-light red"
+                               onclick="return confirm('Are you sure you want to delete?')">
+                                <i class="material-icons">
+                                <img src="{{ url_for('static', filename='img/delete.png') }}"></i></a>
 
                         </div>
                     </div>

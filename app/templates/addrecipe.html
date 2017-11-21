@@ -56,7 +56,7 @@
         </div>
         <div class="row margin">
           <div class="input-field col s12">
-            <input name="name" type="text" id="name">
+            <input name="name" type="text" id="name" value="{{ request.form['name'] }}">
             <label for="name" class="center-align">Name</label>
           </div>
         </div>
@@ -69,20 +69,22 @@
       </div> <br><br>
         <div class="row margin">
             <div class="input-field col s12">
-              <input name="time" type="text" id="time">
+              <input name="time" type="text" id="time" value="{{ request.form['time'] }}">
               <label for="time" class="center-align">Time taken</label>
             </div>
           </div>
       
         <div class="row">
             <div class="input-field col s12">
-              <textarea id="textarea" name="ingredients" class="materialize-textarea"></textarea>
+              <textarea id="textarea" name="ingredients"
+                        class="materialize-textarea">{{ request.form['ingredients'] }}</textarea>
               <label for="textarea1">Ingredients</label>
             </div>
           </div>
           <div class="row">
             <div class="input-field col s12">
-              <textarea id="textarea1" name="direction" class="materialize-textarea"></textarea>
+              <textarea id="textarea1" name="direction"
+                        class="materialize-textarea">{{ request.form['direction'] }}</textarea>
               <label for="textarea1">Directions</label>
             </div>
           </div>

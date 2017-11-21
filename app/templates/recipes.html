@@ -56,13 +56,21 @@
 <div class="">
     {% for recipe in data["response"] %}
     {% if data['category_id'] == data["response"][recipe]['category_id'] %}
-    <div class="row margin " style="background: whitesmoke; width: 300px; float: left; padding: 30px;">
+    <div class="row margin " style="background: whitesmoke; width: 270px; float: left; padding: 10px;">
         <div class="input-field col s4" style="border-left: thick solid maroon; padding-left: 20px;">
             <div>
                 <h4>{{ data["response"][recipe]['name'] }}</h4>
+
+                {% if data["response"][recipe]['image_url'] %}
                 <img src="{{ url_for('static', filename='uploaded_images/'+data['response'][recipe]['image_url'])}}"
                                          height="124" width="124"
                      class="hero-link__item__image">&nbsp &nbsp
+                {% else %}
+                <img src=""
+                                         height="124" width="124"
+                     class="hero-link__item__image">&nbsp &nbsp
+                {% endif %}
+
                 <h5>Time: {{ data["response"][recipe]['time'] }}</h5>
                 <h5><b>Ingredients</b></h5>
                 <h6>{{ data["response"][recipe]['ingredients'] }}</h6> <br>

@@ -33,12 +33,9 @@ class Category(object):
                 self._id = self.assign_id()
                 self.user_id = user_id
                 self.image_url = image_url
-                if not image_url:
-                    return {
-                        "message": "No file chosen",
-                        "status": "error"
-                    }
-                if not self.allowed_file(image_url.filename):
+
+                image = None if not image_url else image_url.filename
+                if image_url and not self.allowed_file(image_url.filename):
                     return {
                         "message": "File chosen is not allowed",
                         "status": "error"
@@ -48,15 +45,17 @@ class Category(object):
                         "message": "Category already exists",
                         "status": "error"
                     }
-                if self.save():
-                    return {
-                        "message": "Category created successfully",
-                        "status": "success",
-                        "category": self.category[self._id]
-                    }
+                self.category[self._id] = {
+                    "id": self._id,
+                    "name": self.name,
+                    "desc": self.description,
+                    "user_id": self.user_id,
+                    "image_url": image
+                }
                 return {
-                    "message": "Category exists",
-                    "status": "error"
+                    "message": "Category created successfully",
+                    "status": "success",
+                    "category": self.category[self._id]
                 }
             return {
                 "message": "Input cannot be empty",
@@ -172,17 +171,6 @@ class Category(object):
             self.last_id = int(self.last_id) + 1
             _id = self.last_id
         return _id
-
-    def save(self):
-        """save data"""
-        self.category[self._id] = {
-            "id": self._id,
-            "name": self.name,
-            "desc": self.description,
-            "user_id": self.user_id,
-            "image_url": self.image_url.filename
-        }
-        return True
 
     def check_if_exists(self, _id):
         """Check if user exists"""

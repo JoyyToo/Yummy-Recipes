@@ -24,15 +24,15 @@
 </head>
 
 <body>
+
 {% if data %}
-    {% if data['status'] == "success" %}
-        <div class="alert alert-success alert-dismissable">
-    {% else %}
-        <div class="alert alert-danger alert-dismissable">
-    {% endif %}
+
+{% if data['message']['type'] == ''%}
+<div class="alert alert-danger alert-dismissable">
     <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
-    <strong>{{ data['message'] }}</strong>
+    <strong>{{ data['message']['msg'] }}</strong>
 </div>
+{% endif %}
 {% endif %}
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg  fixed-top" style="background: rgba(20, 20, 20, 0);">
@@ -65,6 +65,12 @@
                     <input class="validate" id="email" name="email"
                            value="{{ request.form['email'] }}" type="text">
                     <label for="email" class="center-align">Email</label>
+                    {% if data%}
+
+                    {% if data['message']['type'] == 'email_error'%}
+<strong style="color: red; padding-left: 40px;" >{{ data['message']['msg'] }}</strong>
+                    {% endif %}
+{% endif %}
                 </div>
             </div>
             <div class="row margin">
@@ -73,11 +79,22 @@
                     <input id="password" name="password"
                            value="{{ request.form['password'] }}" type="password">
                     <label for="password">Password</label>
+                    {% if data%}
+
+                    {% if data['message']['type'] == 'password_error'%}
+<strong style="color: red; padding-left: 40px;" >{{ data['message']['msg'] }}</strong>
+                    {% endif %}
+{% endif %}
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12">
                     <button type="submit" class="btn waves-effect waves-light col s12" value="Login">Login</button>
+                </div>
+                <div class="input-field col s12">
+                    <a href="{{ url_for('register') }}">
+                   <button type="button" class="btn waves-effect waves-light col s12"
+                           style=" background-color: #f44336;">Cancel</button></a>
                 </div>
             </div>
             <div class="row">

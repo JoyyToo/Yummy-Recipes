@@ -41,10 +41,14 @@
       </div>
     </nav>
 {% if data %}
+   {% if data['message']%}
+{% if data['message']['type'] == '' %}
 <div class="alert alert-danger alert-dismissable">
     <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
-    <strong>{{ data['message'] }}</strong>
+    <strong>{{ data['message']['msg'] }}</strong>
 </div>
+{% endif %}
+{% endif %}
 {% endif %}
 
   <div id="login-page" class="row">
@@ -58,12 +62,22 @@
           <div class="input-field col s12">
             <input name="name" type="text" id="name" value="{{ request.form['name'] }}">
             <label for="name" class="center-align">Name</label>
+              {% if data['message']%}
+              {% if data['message']['type'] == 'name_error' %}
+<strong style="color: red; padding-left: 40px;" >{{ data['message']['msg'] }}</strong>
+{% endif %}
+{% endif %}
           </div>
         </div>
         <h6 style="margin-left: 10px">Upload image</h6>
         <div class="row margin">
           <div class="input-field col s12">
            <input type="file" name="file" id="fileupload">
+              {% if data['message']%}
+                          {% if data['message']['type'] == 'image_error' %}
+<strong style="color: red; padding-left: 40px;" >{{ data['message']['msg'] }}</strong>
+{% endif %}
+{% endif %}
 
         </div>
       </div> <br><br>
@@ -93,15 +107,22 @@
           <div class="input-field col s12">
             <button type="submit" value="ADD" class="btn waves-effect waves-light col s12">ADD</button>
           </div>
-          <div class="input-field col s6 m6 l6">
+           <div class="input-field col s12">
+                    <a href="{{ url_for('recipes', _id=data['category_id'] ) }}">
+                   <button type="button" class="btn waves-effect waves-light col s12"
+                           style=" background-color: #f44336;">Cancel</button></a>
+                </div>
+        </div>
+          <div class="row">
+              <div class="input-field col s6 m6 l6">
             <p class="margin medium-small">A recipe has no soul. You are the cook, give life to the recipe</p>
           </div>
-        </div>
+          </div>
 
       </form>
     </div>
   </div>
-  </div>
+</body>
 <!-- SCRIPTS -->
     <!-- JQuery -->
     <script type="text/javascript" src="{{ url_for('static', filename = 'js/jquery-3.2.1.min.js') }}"></script>

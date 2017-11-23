@@ -144,7 +144,9 @@ def update_category(_id):
 @app.route('/category/<_id>/addrecipe', methods=['POST', 'GET'])
 def addrecipe(_id):
     """Add recipe"""
-    response = None
+    response = {
+        'category_id': _id
+    }
     if 'is_logged_in' not in session.keys():
         return redirect(url_for('login'))
     if request.method == 'POST':
@@ -217,4 +219,8 @@ def update_recipe(_id, recipe_id):
                 image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             return redirect(url_for('recipes', _id=category_id))
 
-    return render_template('updaterecipe.html', data=response)
+    return render_template('updaterecipe.html', data={
+        'category_id': _id,
+        'recipe_id': recipe_id,
+        'response': response
+    })

@@ -26,8 +26,11 @@ class Recipe(object):
             if name.strip() and time.strip() and ingredients.strip() and direction.strip():
                 if self.validate_input(name=name, time=time, ingredients=ingredients, direction=direction):
                     return {
-                        "message": "{} contains invalid characters".format(
-                            self.validate_input(name=name, time=time, ingredients=ingredients, direction=direction)),
+                        "message": {
+                            'type': '',
+                            'msg': "{} contains invalid characters".format(
+                                self.validate_input(name=name, time=time, ingredients=ingredients, direction=direction))
+                        },
                         "status": "error"
                     }
                 self.name = name
@@ -42,12 +45,18 @@ class Recipe(object):
                 image = None if not image_url else image_url.filename
                 if image_url and not self.allowed_file(image_url.filename):
                     return {
-                        "message": "File chosen is not allowed",
+                        "message": {
+                            'type': 'image_error',
+                            'msg':  "File chosen is not allowed. Use jpg, png or jpeg."
+                        },
                         "status": "error"
                     }
                 if self.check_if_name_exists(name, user_id, category_id):
                     return {
-                        "message": "Recipe already exists",
+                        "message": {
+                            'type': 'name_error',
+                            'msg': "Recipe already exists"
+                        },
                         "status": "error"
                     }
                 self.allrecipes[self._id] = {
@@ -66,11 +75,17 @@ class Recipe(object):
                     "recipe": self.allrecipes[self._id]
                 }
             return {
-                "message": "Input cannot be empty",
+                "message": {
+                    'type': '',
+                    'msg': "Input cannot be empty"
+                },
                 "status": "error"
             }
         return {
-            "message": "Fill all fields",
+            "message": {
+                'type': '',
+                'msg': "Fill all fields"
+            },
             "status": "error"
         }
 
@@ -86,9 +101,11 @@ class Recipe(object):
                     if self.validate_input(
                             name=name, time=time, ingredients=ingredients, direction=direction):
                         return {
-                            "message": "{} contains invalid characters".format(
-                                self.validate_input(name=name, time=time, ingredients=ingredients,
-                                                    direction=direction)),
+                            "message": {
+                                'type': '',
+                                'msg': "{} contains invalid characters".format(
+                                    self.validate_input(name=name, time=time, ingredients=ingredients, direction=direction))
+                            },
                             "status": "error",
                             "recipe": self.allrecipes[recipe_id]
                         }
@@ -97,13 +114,19 @@ class Recipe(object):
                         if not image_url else image_url.filename
                     if image_url and not self.allowed_file(image_url.filename):
                                 return {
-                                    "message": "File chosen is not allowed",
+                                    "message": {
+                                        'type': 'image_error',
+                                        'msg':  "File chosen is not allowed. Use jpg, png or jpeg."
+                                    },
                                     "status": "error",
                                     "recipe": self.allrecipes[recipe_id]
                                 }
                     if self.validate_update(name, user_id, recipe_id, category_id):
                         return {
-                            "message": "Recipe already exists",
+                            "message": {
+                                'type': 'name_error',
+                                'msg': "Recipe already exists"
+                            },
                             "status": "error",
                             "recipe": self.allrecipes[recipe_id]
                         }
@@ -123,17 +146,26 @@ class Recipe(object):
                         "recipe": self.allrecipes[recipe_id]
                     }
                 return {
-                    "message": "Input cannot be empty",
+                    "message": {
+                        'type': '',
+                        'msg': "Input cannot be empty"
+                    },
                     "status": "error"
                 }
 
             return {
-                "message": "Fill all fields",
+                "message": {
+                    'type': '',
+                    'msg': "Fill all fields"
+                },
                 "status": "error",
                 "recipe": self.allrecipes[recipe_id]
             }
         return {
-            "message": "Recipe does not exist",
+            "message": {
+                'type': 'name_error',
+                'msg':  "Recipe does not exist"
+            },
             "status": "error",
         }
 

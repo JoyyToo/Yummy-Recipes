@@ -17,27 +17,42 @@ class TestForClassRecipe(unittest.TestCase):
     def test_for_empty_fields(self):
         """Test for empty fields"""
         result = self.recipe.create_recipe('', '', '', '', 0, 0, 'file.png')
-        self.assertEqual({"status": "error", "message": 'Fill all fields'}, result)
+        self.assertEqual({"status": "error", "message": {
+                'type': '',
+                'msg': "Fill all fields"
+            }}, result)
 
     def test_for_empty_name_field(self):
         """Test for empty name field"""
         result = self.recipe.create_recipe('', '1 hour', ' 1 tbsp ', 'stir', 1, 2, 'file.png')
-        self.assertEqual({"status": "error", "message": 'Fill all fields'}, result)
+        self.assertEqual({"status": "error", "message": {
+                'type': '',
+                'msg': "Fill all fields"
+            }}, result)
 
     def test_for_empty_time_field(self):
         """Test for empty time field"""
         result = self.recipe.create_recipe('biryani', '', '1 tbsp', 'stir', 1, 2, 'file.png')
-        self.assertEqual({"status": "error", "message": 'Fill all fields'}, result)
+        self.assertEqual({"status": "error", "message": {
+                'type': '',
+                'msg': "Fill all fields"
+            }}, result)
 
     def test_for_empty_ingredients_field(self):
         """Test for empty ingredients field"""
         result = self.recipe.create_recipe('biryani', '1 hour', '', 'stir', 1, 2, 'file.png')
-        self.assertEqual({"status": "error", "message": 'Fill all fields'}, result)
+        self.assertEqual({"status": "error", "message": {
+                'type': '',
+                'msg': "Fill all fields"
+            }}, result)
 
     def test_for_empty_direction_field(self):
         """Test for empty direction field"""
         result = self.recipe.create_recipe('biryani', '1 hour', '1 tbsp', '', 1, 2, 'file.png')
-        self.assertEqual({"status": "error", "message": 'Fill all fields'}, result)
+        self.assertEqual({"status": "error", "message": {
+                'type': '',
+                'msg': "Fill all fields"
+            }}, result)
 
     # tests for update recipe function
     def test_for_update_non_existing_recipe(self):
@@ -46,7 +61,10 @@ class TestForClassRecipe(unittest.TestCase):
         img = Image.open(image)
         self.recipe.update_recipe(1, 'biryani', '1 hour', '1 tbsp', 'stir', 1, 2, img)
         result = self.recipe.update_recipe(0, 'biryani', '1 hour', '1 tbsp', 'stir', 1, 2, img)
-        self.assertEqual({"status": "error", "message": "Recipe does not exist"}, result)
+        self.assertEqual({"status": "error", "message": {
+                'type': 'name_error',
+                'msg':  "Recipe does not exist"
+            }}, result)
 
     def test_for_delete_non_existing_recipe(self):
         """Test for delete non existing recipe"""
@@ -60,7 +78,9 @@ class TestForClassRecipe(unittest.TestCase):
         img = Image.open(image)
         self.recipe.update_recipe(1, 'biryani', '1 hour', '1 tbsp', 'stir', 1, 2, img)
         result = self.recipe.update_recipe(0, 'biryani', '1 hour', '1 tbsp', 'stir', 1, 2, img)
-        self.assertEqual({"status": "error", "message": "Recipe does not exist"}, result)
+        self.assertEqual({"status": "error", "message": {
+                'type': 'name_error',
+                'msg':  "Recipe does not exist"}}, result)
 
     def test_for_view_single_non_existing_recipes(self):
         """Test for non-existing update category"""
@@ -80,7 +100,7 @@ class TestForClassRecipe(unittest.TestCase):
         image = os.path.dirname(os.path.realpath(__file__)) + "/test.jpg"
         img = Image.open(image)
         result = self.recipe.create_recipe(' ', ' ', ' ', ' ', 1, 1, img)
-        self.assertEqual({'status': 'error', 'message': 'Input cannot be empty'}, result)
+        self.assertEqual({'status': 'error', "message": {'msg': 'Input cannot be empty', 'type': ''}}, result)
 
     def test_adding_recipe_having_same_name_as_an_existing_recipe(self):
         """Test for adding recipe with existing name"""
@@ -88,7 +108,8 @@ class TestForClassRecipe(unittest.TestCase):
         img = Image.open(image)
         self.recipe.create_recipe('name', 'time', 'ingredients', 'directions', 1, 1, img)
         result = self.recipe.create_recipe('name', 'different time', 'other ingredients', 'other directions', 1, 1, img)
-        self.assertEqual({"message": "Recipe already exists", "status": "error"}, result)
+        self.assertEqual({"message": {'msg': 'Recipe already exists', 'type': 'name_error'},
+                          "status": "error"}, result)
 
     def test_deletion_of_recipe(self):
         """Test recipe deletion"""

@@ -18,14 +18,20 @@ class TestForClassCategory(unittest.TestCase):
         image = os.path.dirname(os.path.realpath(__file__)) + "/test.jpg"
         img = Image.open(image)
         response = self.category.create_category(' ', ' ', ' ', img)
-        self.assertEqual({'message': 'Input cannot be empty', 'status': 'error'}, response)
+        self.assertEqual({ "message": {
+                    'type': '',
+                    'msg': "Input cannot be empty"
+                }, 'status': 'error'}, response)
 
     def test_for_adding_existing_category(self):
         image = os.path.dirname(os.path.realpath(__file__)) + "/test.jpg"
         img = Image.open(image)
         self.category.create_category('name', 'desc', 'user_id', img)
         response = self.category.create_category('name', 'desc', 'user_id', img)
-        self.assertEqual({'message': 'Category already exists', 'status': 'error'}, response)
+        self.assertEqual({"message": {
+                            'type': 'name_error',
+                            'msg': "Category already exists"
+                        }, 'status': 'error'}, response)
 
     def test_update_category_without_image(self):
         image = os.path.dirname(os.path.realpath(__file__)) + "/test.jpg"
@@ -47,14 +53,15 @@ class TestForClassCategory(unittest.TestCase):
         self.category.create_category('name', 'desc', 'user_id', img)
         self.category.create_category('name 1', 'desc 1', 'user_id 1', img)
         response = self.category.update_category(2, 'name', 'desc', 'user_id', img)
-        self.assertEqual('Category already exists', response['message'])
+        self.assertEqual({'msg': 'Category already exists', 'type': 'name_error'},
+                         response['message'])
 
     def test_update_category_with_invalid_input(self):
         image = os.path.dirname(os.path.realpath(__file__)) + "/test.jpg"
         img = Image.open(image)
         self.category.create_category('name', 'desc', 'user_id', img)
         response = self.category.update_category(1, ' ', ' ', ' ', img)
-        self.assertEqual('Input cannot be empty', response['message'])
+        self.assertEqual({'msg': 'Input cannot be empty', 'type': ''}, response['message'])
 
     def test_delete_category(self):
         image = os.path.dirname(os.path.realpath(__file__)) + "/test.jpg"
@@ -100,29 +107,41 @@ class TestForClassCategory(unittest.TestCase):
     def test_for_empty_fields(self):
         """Test for empty fields"""
         result = self.category.create_category('', '', '', '')
-        self.assertEqual({"status": "error", "message": "Fill all the fields"}, result)
+        self.assertEqual({"status": "error", "message": {
+                'type': '',
+                'msg': "Fill all the fields"
+            }}, result)
 
     def test_for_empty_name_field(self):
         """Test for empty name field"""
         result = self.category.create_category('', 'after dinner', 1, 'file.png')
-        self.assertEqual({"status": "error", "message": "Fill all the fields"}, result)
+        self.assertEqual({"status": "error", "message": {
+                'type': '',
+                'msg': "Fill all the fields"
+            }}, result)
 
     def test_for_empty_description_field(self):
         """Test for empty description field"""
         result = self.category.create_category('dessert', '', 1, 'file.png')
-        self.assertEqual({"status": "error", "message": "Fill all the fields"}, result)
+        self.assertEqual({"status": "error", "message": {
+                'type': '',
+                'msg': "Fill all the fields"
+            }}, result)
 
     def test_for_non_existing_category(self):
         """Test for non-existing category"""
         self.category.single_category(1)
         result = self.category.single_category(2)
-        self.assertEqual({"status": "error", "message": "Category not available"}, result)
+        self.assertEqual({"status": "error", 'message': 'Category not available', 'status': 'error'}, result)
 
     def test_for_missing_update_category(self):
         """Test for non-existing update category"""
         self.category.update_category(1, 'Appetizers', 'a desc', 1, 'file.png')
         result = self.category.update_category(2, 'App', 'available before', 1, 'file.png')
-        self.assertEqual({"status": "error", "message": "Category does not exist"}, result)
+        self.assertEqual({"status": "error", "message": {
+                'type': 'name_error',
+                'msg': "Category does not exist"
+            }}, result)
 
     def test_for_delete_missing_category(self):
         """Test for non-existing delete category"""

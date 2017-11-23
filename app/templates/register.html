@@ -35,19 +35,23 @@
 
     </div>
 </nav>
-{% if data %}
+{% if data%}
+
+{% if data['message']['type'] == ''%}
 <div class="alert alert-danger alert-dismissable">
     <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
-    <strong>{{ data['message'] }}</strong>
+    <strong>{{ data['message']['msg'] }}</strong>
 </div>
 {% endif %}
+{% endif %}
+
 <ul class="tab-group">
     <li class="tab active"><a href="{{ url_for('register') }}">Sign Up</a></li>
     <li class="tab"><a href="{{ url_for('login') }}">Log In</a></li>
 </ul>
 <div id="login-page" class="row">
     <div class="col s12 z-depth-6 card-panel">
-        <form class="login-form" method="post" action="">
+        <form id="form" class="login-form" method="post" action="" data-parsley-validate>
             <div class="row">
                 <div class="input-field col s12 center">
                     <p class="center login-form-text">Register Here</p>
@@ -59,6 +63,12 @@
                     <input id="username" name="username" type="text"
                            value="{{ request.form['username'] }}" class="validate" >
                     <label for="username" class="center-align">Username</label>
+                    {% if data%}
+
+                    {% if data['message']['type'] == 'username_error'%}
+<strong style="color: red; padding-left: 40px;" >{{ data['message']['msg'] }}</strong>
+                    {% endif %}
+{% endif %}
                 </div>
             </div>
             <div class="row margin">
@@ -67,6 +77,12 @@
                     <input id="email" type="text" name="email"
                            value="{{ request.form['email'] }}" class="validate" >
                     <label for="email" class="center-align">Email</label>
+                    {% if data%}
+
+                    {% if data['message']['type'] == 'email_error'%}
+    <strong style="color: red; padding-left: 40px;" >{{ data['message']['msg'] }}</strong>
+                    {% endif %}
+{% endif %}
                 </div>
             </div>
             <div class="row margin">
@@ -75,6 +91,12 @@
                     <input id="password" type="password" name="password"
                            value="{{ request.form['password'] }}" class="validate" >
                     <label for="password">Password</label>
+                                  {% if data%}
+
+                    {% if data['message']['type'] == 'password_error'%}
+<strong style="color: red; padding-left: 40px;" >{{ data['message']['msg'] }}</strong>
+                    {% endif %}
+{% endif %}
                 </div>
             </div>
             <div class="row margin">
@@ -83,14 +105,31 @@
                     <input id="password-again" name="password-again"
                            value="{{ request.form['password-again'] }}" type="password" >
                     <label for="password-again">Re-type password</label>
+                                  {% if data%}
+
+                    {% if data['message']['type'] == 'password_error'%}
+<strong style="color: red; padding-left: 40px;" >{{ data['message']['msg'] }}</strong>
+                    {% endif %}
+{% endif %}
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12">
                     <button type="submit" class="btn waves-effect waves-light col s12">Register Now</button>
                 </div>
+
+               <div class="input-field col s12">
+                    <a href="{{ url_for('home') }}">
+                   <button type="button" class="btn waves-effect waves-light col s12"
+                           style=" background-color: #f44336;">Cancel</button></a>
+                </div>
+            </div>
+            <div class="row">
+
                 <div class="input-field col s12">
-                    <p class="margin center medium-small sign-up">Already have an account? <a
+                    <p class="margin center medium-small sign-up">Already have an account?
+                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;
+                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<a
                             href="{{ url_for('login') }}">Login</a></p>
                 </div>
             </div>
@@ -98,6 +137,9 @@
     </div>
 </div>
 <!-- SCRIPTS -->
+<script>
+  $('#form').parsley();
+</script>
 <!-- JQuery -->
 <script type="text/javascript" src="{{ url_for('static', filename = 'js/jquery-3.2.1.min.js') }}"></script>
 <!-- Bootstrap tooltips -->

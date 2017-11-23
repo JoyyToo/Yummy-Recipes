@@ -24,20 +24,29 @@ class Users(object):
 
                 if INVALID_CHAR.search(username):
                     return {
-                        "message": "Username contains invalid characters",
+                        "message": {
+                            "type": "username_error",
+                            "msg": "Username contains invalid characters"
+                        },
                         "status": "error"
                     }
 
                 if not self.valid_email(email):
                     return {
-                        "message": "Invalid Email address",
+                        "message": {
+                            'type': 'email_error',
+                            'msg': "Invalid Email address"
+                        },
                         "status": "error"
                     }
 
                 if password == password_again:
                     if len(password) < 6:
                         return {
-                            "message": "Password must be more than 6 characters",
+                            "message": {
+                                'type': "password_error",
+                                'msg': "Password must be more than 6 characters"
+                            },
                             "status": "error"
                         }
                     self.username = username
@@ -48,7 +57,10 @@ class Users(object):
 
                     if self.check_if_user_exists(email):
                         return {
-                            "message": "User already exists. Please login",
+                            "message": {
+                                'type': '',
+                                'msg': "User already exists. Please login"
+                            },
                             "status": "error"
                         }
 
@@ -60,17 +72,26 @@ class Users(object):
                         }
 
                 return {
-                    'message': 'Passwords do not match',
+                    'message': {
+                        'type': 'password_error',
+                        'msg': 'Passwords do not match'
+                    },
                     'status': 'error'
                 }
             return {
-                "message": "Input cannot be empty",
+                "message": {
+                    'type': '',
+                    'msg': "Input cannot be empty"
+                },
                 "status": "error"
             }
 
         else:
             return {
-                'message': 'Please fill in all fields',
+                'message': {
+                    'type': '',
+                    'msg': 'Please fill in all fields'
+                },
                 'status': 'error'
             }
 
@@ -80,13 +101,19 @@ class Users(object):
 
             if not self.valid_email(email):
                 return {
-                    "message": "Invalid Email address",
+                    "message": {
+                        'type': 'email_error',
+                        'msg': "Invalid Email address"
+                    },
                     "status": "error"
                 }
 
             if len(password) < 6:
                 return {
-                    "message": "Password must be more than 6 characters",
+                    "message": {
+                                'type': "password_error",
+                                'msg': "Password must be more than 6 characters"
+                            },
                     "status": "error"
                 }
             if self.check_if_user_exists(email):
@@ -97,11 +124,17 @@ class Users(object):
                         "user": self.users[self.check_if_user_exists(email)]
                     }
             return {
-                "message": "Invalid password or email address",
+                "message": {
+                    'type': '',
+                    'msg': "Invalid password or email address"
+                },
                 "status": "error"
             }
         return {
-            'message': 'Please fill in all fields',
+            'message': {
+                'type': '',
+                'msg': 'Please fill in all fields'
+            },
             'status': 'error'
         }
 

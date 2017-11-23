@@ -40,12 +40,15 @@
 
       </div>
     </nav>
-{% if data %}
+   {% if data%}
+{% if data['message']['type'] == '' %}
 <div class="alert alert-danger alert-dismissable">
     <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
-    <strong>{{ data['message'] }}</strong>
+    <strong>{{ data['message']['msg'] }}</strong>
 </div>
 {% endif %}
+{% endif %}
+
   <div id="login-page" class="row">
     <div class="col s12 z-depth-6 card-panel">
       <form class="login-form" method="post" enctype="multipart/form-data">
@@ -58,6 +61,11 @@
           <div class="input-field col s12">
             <input name="name" type="text" id="name" value="{{ request.form['name'] }}">
             <label for="name" class="center-align">Name</label>
+              {% if data%}
+{% if data['message']['type'] == 'name_error' %}
+ <strong style="color: red; padding-left: 40px;" >{{ data['message']['msg'] }}</strong>
+{% endif %}
+{% endif %}
           </div>
         </div>
 
@@ -70,10 +78,20 @@
           </div>
        <h6 style="margin-left: 10px">Upload image</h6>
          <input type='file' name="file" />
+          {% if data%}
+{% if data['message']['type'] == 'image_error' %}
+<strong style="color: red; padding-left: 40px;" >{{ data['message']['msg'] }}</strong>
+{% endif %}
+{% endif %}
         <div class="row">
           <div class="input-field col s12" style="margin-top: 40px;">
             <button type="submit"  class="btn waves-effect waves-light col s12" value="ADD">ADD</button>
           </div>
+            <div class="input-field col s12" style="margin-top: 40px;">
+                    <a href="{{ url_for('get_categories') }}">
+                   <button type="button" class="btn waves-effect waves-light col s12"
+                           style=" background-color: #f44336;">Cancel</button></a>
+                </div>
         </div>
 
       </form>

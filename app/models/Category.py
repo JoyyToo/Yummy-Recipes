@@ -24,8 +24,11 @@ class Category(object):
             if name.strip() and description.strip():
                 if self.validate_input(name=name, description=description):
                     return {
-                        "message": "{} contains invalid characters".format(
-                            self.validate_input(name=name, description=description)),
+                        "message": {
+                            'type': '',
+                            'msg': "{} contains invalid characters".format
+                            (self.validate_input(name=name, description=description))
+                        },
                         "status": "error"
                     }
                 self.name = name
@@ -37,12 +40,18 @@ class Category(object):
                 image = None if not image_url else image_url.filename
                 if image_url and not self.allowed_file(image_url.filename):
                     return {
-                        "message": "File chosen is not allowed",
+                        "message": {
+                            'type': 'image_error',
+                            'msg': "File chosen is not allowed. Use jpg, png or jpeg."
+                        },
                         "status": "error"
                     }
                 if self.check_if_name_exists(name, user_id):
                     return {
-                        "message": "Category already exists",
+                        "message": {
+                            'type': 'name_error',
+                            'msg': "Category already exists"
+                        },
                         "status": "error"
                     }
                 self.category[self._id] = {
@@ -58,12 +67,18 @@ class Category(object):
                     "category": self.category[self._id]
                 }
             return {
-                "message": "Input cannot be empty",
+                "message": {
+                    'type': '',
+                    'msg': "Input cannot be empty"
+                },
                 "status": "error"
             }
 
         return {
-            "message": "Fill all the fields",
+            "message": {
+                'type': '',
+                'msg': "Fill all the fields"
+            },
             "status": "error"
         }
 
@@ -75,8 +90,11 @@ class Category(object):
                 if name.strip() and description.strip():
                     if self.validate_input(name=name, description=description):
                         return {
-                            "message": "{} contains invalid characters".format(
-                                self.validate_input(name=name, description=description)),
+                            "message": {
+                                'type': '',
+                                'msg': "{} contains invalid characters".format
+                                (self.validate_input(name=name, description=description))
+                            },
                             "status": "error",
                             "category": self.category[category_id]
                         }
@@ -84,13 +102,19 @@ class Category(object):
                         else image_url.filename
                     if image_url and not self.allowed_file(image_url.filename):
                         return {
-                            "message": "File chosen is not allowed",
+                            "message": {
+                                'type': 'image_error',
+                                'msg': "File chosen is not allowed. Use jpg, png or jpeg."
+                            },
                             "status": "error",
                             "category": self.category[category_id]
                         }
                     if self.validate_update(name, user_id, category_id):
                         return {
-                            "message": "Category already exists",
+                            "message": {
+                             'type': 'name_error',
+                             'msg': "Category already exists"
+                            },
                             "status": "error",
                             "category": self.category[category_id]
                         }
@@ -107,18 +131,27 @@ class Category(object):
                         "category": self.category[category_id]
                     }
                 return {
-                    "message": "Input cannot be empty",
+                    "message": {
+                     'type': '',
+                     'msg': "Input cannot be empty"
+                    },
                     "status": "error",
                     "category": self.category[category_id]
 
                 }
             return {
-                "message": "Fill all the fields",
+                "message": {
+                    'type': '',
+                    'msg': "Fill all the fields"
+                },
                 "status": "error",
                 "category": self.category[category_id]
             }
         return {
-            "message": "Category does not exist",
+            "message": {
+                'type': 'name_error',
+                'msg': "Category does not exist"
+            },
             "status": "error",
         }
 
